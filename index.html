@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monopoli Jelajah Riau</title>
+<meta name="description" content="Game papan edukatif Pendidikan Pancasila kelas 3 SD: mengenal lingkungan, susunan wilayah, ciri khas Riau, dan NKRI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ================= TOKEN WARNA ================= */
+:root{
+  --krem:#FBF3E2; --krem2:#F3E4C4; --emas:#B8913A; --emas-tua:#8A6A22;
+  --hijau:#1F5A3A; --hijau2:#2E7A52; --teks:#2A1E10; --teks2:#5A4630;
+  --tantangan:#3B82F6; --kesempatan:#FACC15; --dana:#22C55E; --bonus:#A855F7; --hukuman:#EF4444;
+  --z-lingkungan:#F97316; --z-wilayah:#C8A27A; --z-riau:#B8913A;
+  --font-judul:"Fredoka","Baloo 2","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;
+  --font-isi:"Nunito","Segoe UI","Trebuchet MS",system-ui,sans-serif;
+  --bayang:0 4px 0 rgba(90,60,20,.18),0 8px 18px rgba(90,60,20,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--font-isi);color:var(--teks);background-color:var(--krem);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cg fill='none' stroke='%23B8913A' stroke-opacity='.13' stroke-width='2'%3E%3Cpath d='M30 4 L56 30 L30 56 L4 30Z'/%3E%3Cpath d='M30 16 L44 30 L30 44 L16 30Z'/%3E%3Cpath d='M0 0 L8 8 M60 0 L52 8 M0 60 L8 52 M60 60 L52 52'/%3E%3C/g%3E%3Ccircle cx='30' cy='30' r='3' fill='%231F5A3A' fill-opacity='.1'/%3E%3C/svg%3E");
+  overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+button{font-family:var(--font-judul);cursor:pointer;border:none;min-height:48px;min-width:48px;font-size:20px;border-radius:14px;transition:transform .12s,box-shadow .12s,filter .12s}
+button:active{transform:translateY(3px)}
+button:focus-visible{outline:4px solid #1D4ED8;outline-offset:3px}
+button:disabled{opacity:.5;cursor:not-allowed}
+.btn{padding:10px 26px;font-weight:700;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.btn:active{box-shadow:0 2px 0 rgba(0,0,0,.25)}
+.btn-hijau{background:var(--hijau);color:#fff}
+.btn-emas{background:#E9C46A;color:var(--teks)}
+.btn-putih{background:#fff;color:var(--teks);border:3px solid var(--emas)}
+.btn-merah{background:#B91C1C;color:#fff}
+.btn-besar{font-size:28px;padding:14px 38px}
+h1,h2,h3{font-family:var(--font-judul)}
+
+#app{position:relative;width:min(100vw,177.78vh);height:min(56.25vw,100vh);}
+.layar{position:absolute;inset:0;display:none}
+.layar.aktif{display:flex}
+
+/* ornamen pucuk rebung */
+.rebung{height:22px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='22'%3E%3Cpath d='M0 22 L14 2 L28 22Z' fill='%23B8913A'/%3E%3Cpath d='M7 22 L14 11 L21 22Z' fill='%231F5A3A'/%3E%3C/svg%3E") repeat-x;}
+.rebung.bawah{transform:scaleY(-1)}
+.sudut{position:absolute;width:70px;height:70px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 70 70'%3E%3Cpath d='M4 4 H66 L4 66Z' fill='%23B8913A'/%3E%3Cpath d='M12 12 H46 L12 46Z' fill='%231F5A3A'/%3E%3Cpath d='M20 20 h12 l-12 12z' fill='%23F3E4C4'/%3E%3C/svg%3E") no-repeat}
+.sudut.tl{top:8px;left:8px}.sudut.tr{top:8px;right:8px;transform:scaleX(-1)}
+.sudut.bl{bottom:8px;left:8px;transform:scaleY(-1)}.sudut.br{bottom:8px;right:8px;transform:scale(-1,-1)}
+
+/* ================= LAYAR PEMBUKA ================= */
+#layarPembuka{flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:30px}
+.judul-utama{font-size:clamp(34px,5.2vw,78px);color:var(--hijau);line-height:1.05;text-shadow:0 4px 0 #E9C46A}
+.subjudul{font-family:var(--font-judul);font-size:clamp(20px,2.2vw,34px);color:var(--emas-tua);font-weight:600}
+.ilustrasi{font-size:clamp(40px,5vw,72px);display:flex;gap:18px;filter:drop-shadow(0 6px 4px rgba(0,0,0,.15))}
+.ilustrasi span{animation:apung 3s ease-in-out infinite}
+.ilustrasi span:nth-child(2n){animation-delay:.6s}
+@keyframes apung{50%{transform:translateY(-10px)}}
+.slogan-pita{background:var(--hijau);color:#fff;font-family:var(--font-judul);font-size:clamp(18px,1.8vw,28px);padding:10px 34px;border-radius:40px;box-shadow:var(--bayang)}
+.baris-tombol{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+.info-kecil{font-size:16px;color:var(--teks2);font-weight:700}
+
+/* ================= CARA BERMAIN & PENGATURAN ================= */
+.panel-kertas{background:#FFFDF7;border-radius:28px;box-shadow:var(--bayang);border:4px solid var(--emas);position:relative;overflow:auto}
+#layarCara,#layarAtur{align-items:center;justify-content:center;padding:24px}
+#layarCara .panel-kertas,#layarAtur .panel-kertas{width:min(1100px,94%);max-height:96%;padding:22px 34px 26px}
+.judul-panel{font-size:38px;color:var(--hijau);text-align:center;margin:6px 0 14px}
+.langkah{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.langkah div{background:var(--krem);border-radius:18px;padding:14px;display:flex;gap:12px;align-items:center;font-size:20px;font-weight:700;border:2px solid var(--krem2)}
+.langkah b{font-size:40px;flex:none}
+.legenda-besar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0}
+.tengah{text-align:center;margin-top:12px}
+
+.atur-baris{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:10px 0;font-size:22px;font-weight:800}
+.pilih{background:#fff;border:3px solid var(--krem2);color:var(--teks);font-weight:700;padding:6px 18px}
+.pilih.on{background:var(--hijau);border-color:var(--hijau);color:#fff}
+#daftarPemain{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;margin-top:8px}
+.kartu-pemain{display:flex;gap:10px;align-items:center;background:var(--krem);border-radius:16px;padding:10px;border-left:10px solid}
+.kartu-pemain input{flex:1;min-width:0;font:700 20px var(--font-isi);padding:10px;border-radius:12px;border:2px solid var(--krem2);min-height:48px;color:var(--teks)}
+.kartu-pemain select{font:700 18px var(--font-isi);min-height:48px;border-radius:12px;border:2px solid var(--krem2);padding:0 6px;color:var(--teks);background:#fff}
+.pion-preview{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:28px;flex:none;border:3px solid #fff;box-shadow:0 3px 0 rgba(0,0,0,.2)}
+
+/* ================= LAYAR PAPAN ================= */
+#layarPapan{gap:1.2%;padding:1%;align-items:stretch}
+#papanWrap{height:100%;aspect-ratio:1;position:relative;flex:none;padding:10px;background:var(--hijau);border-radius:22px;box-shadow:var(--bayang)}
+#papanWrap::before{content:"";position:absolute;inset:4px;border-radius:18px;border:3px dashed rgba(233,196,106,.7);pointer-events:none}
+#papan{position:relative;width:100%;height:100%;display:grid;grid-template-columns:1.35fr repeat(7,1fr) 1.35fr;grid-template-rows:1.35fr repeat(7,1fr) 1.35fr;gap:3px;background:#E9C46A;border-radius:14px;padding:3px}
+.petak{position:relative;background:#FFFDF7;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;box-shadow:inset 0 -3px 0 rgba(0,0,0,.08);padding:2px}
+.petak .strip{position:absolute;top:0;left:0;right:0;height:17%}
+.petak .ikon{font-size:clamp(16px,2.6vh,34px);line-height:1;margin-top:12%}
+.petak .nama{font-family:var(--font-judul);font-weight:600;font-size:max(14px,1.5vh);line-height:1.05;color:var(--teks);padding:0 1px;margin-top:2px}
+.petak.kartu .ikon{margin-top:0}
+.petak.kartu .nama{color:#111}
+.petak.pojok{background:var(--krem2)}
+.petak.pojok .ikon{font-size:clamp(24px,4.4vh,54px);margin-top:0}
+.petak.pojok .nama{font-size:max(14px,1.75vh)}
+.petak .stempelku{position:absolute;bottom:1px;right:2px;font-size:12px}
+.strip.lingkungan{background:var(--z-lingkungan)}
+.strip.wilayah{background:var(--z-wilayah)}
+.strip.indonesia{background:linear-gradient(#E11D2A 50%,#fff 50%);border-bottom:1px solid #ddd}
+.strip.riau{background:var(--z-riau) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath d='M6 1 L11 6 L6 11 L1 6Z' fill='none' stroke='%231F5A3A' stroke-width='1.5'/%3E%3C/svg%3E")}
+.petak.nkri{background:linear-gradient(#FFE4E6,#fff)}
+.petak.sorot{outline:4px solid #1D4ED8;outline-offset:-4px;z-index:2}
+
+#tengah{grid-area:2/2/9/9;background:radial-gradient(circle at 50% 40%,#FFFDF7,#F6E9CC);border-radius:12px;position:relative;display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:1fr auto;gap:6px;padding:12px;overflow:hidden}
+#tengah .sudut{width:40px;height:40px;opacity:.7}
+.peta-box{position:relative;display:flex;align-items:center;justify-content:center}
+.peta-box svg{width:100%;height:100%;max-height:100%;overflow:visible}
+.ikon-peta{position:absolute;font-size:clamp(18px,3vh,34px);filter:drop-shadow(0 3px 2px rgba(0,0,0,.2));text-align:center;line-height:1}
+.ikon-peta small{display:block;font:700 11px var(--font-isi);color:var(--teks2);background:rgba(255,253,247,.85);border-radius:6px;padding:0 3px;margin-top:1px;white-space:nowrap}
+.dadu-box{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.giliran-mini{font-family:var(--font-judul);font-size:max(16px,2vh);font-weight:700;text-align:center;color:var(--hijau)}
+.scene{width:clamp(56px,9vh,96px);height:clamp(56px,9vh,96px);perspective:500px}
+#dadu{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.2,.8,.3,1.1);transform:rotateX(-20deg) rotateY(25deg)}
+.muka{position:absolute;inset:0;background:#fff;border:3px solid #E2D2AE;border-radius:16%;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:12%;box-shadow:inset 0 0 10px rgba(184,145,58,.35)}
+.muka i{width:70%;height:70%;margin:auto;border-radius:50%;background:var(--hijau)}
+.muka.m1 i{background:#C81E1E}
+#tombolLempar{font-size:max(20px,2.4vh);padding:10px 22px;background:linear-gradient(#2E7A52,#1F5A3A);color:#fff;box-shadow:0 5px 0 #0F3420}
+#tombolLempar:not(:disabled){animation:ajak 1.6s infinite}
+@keyframes ajak{50%{box-shadow:0 5px 0 #0F3420,0 0 0 8px rgba(46,122,82,.25)}}
+.tumpukan-baris{grid-column:1/3;display:flex;gap:8px;justify-content:center}
+.tumpukan{flex:1;max-width:110px;aspect-ratio:1.4;border-radius:12px;position:relative;font-size:clamp(18px,2.8vh,30px);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#111;font-weight:800;box-shadow:3px 3px 0 rgba(0,0,0,.15),6px 6px 0 rgba(0,0,0,.08);min-height:48px;padding:2px}
+.tumpukan span{font:800 max(12px,1.3vh) var(--font-isi);line-height:1}
+.tumpukan.nyala{animation:nyala 1s infinite;z-index:3}
+@keyframes nyala{0%,100%{transform:translateY(0);box-shadow:0 0 0 4px #fff,0 0 0 8px var(--hijau)}50%{transform:translateY(-8px);box-shadow:0 0 0 4px #fff,0 0 0 8px var(--hijau),0 10px 12px rgba(0,0,0,.2)}}
+
+/* pion */
+#lapisPion{position:absolute;inset:10px;pointer-events:none}
+.pion{position:absolute;width:6.2%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-size:clamp(14px,2.4vh,28px);border:3px solid #fff;box-shadow:0 4px 0 rgba(0,0,0,.3);transform:translate(-50%,-50%);transition:left .22s ease,top .22s ease;z-index:5}
+.pion.giliran{animation:denyut 1s infinite;z-index:6}
+@keyframes denyut{50%{box-shadow:0 4px 0 rgba(0,0,0,.3),0 0 0 7px rgba(255,255,255,.75)}}
+.pion.lompat{animation:lompat .22s ease}
+@keyframes lompat{50%{margin-top:-14px}}
+
+/* panel samping */
+#panelSamping{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.kotak{background:#FFFDF7;border-radius:18px;box-shadow:var(--bayang);border:3px solid var(--krem2);padding:10px 12px}
+.atas-panel{display:flex;gap:8px;align-items:center}
+.atas-panel .kotak{flex:1;font-family:var(--font-judul);font-weight:700;font-size:20px;text-align:center;padding:8px}
+.ikon-btn{background:#fff;border:3px solid var(--emas);font-size:24px;width:52px;height:52px;flex:none}
+#kotakGiliran{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800}
+#kotakGiliran .pion-preview{width:56px;height:56px;font-size:30px}
+#daftarSkor{flex:1;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.skor{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:12px;background:var(--krem);border-left:8px solid;font-weight:800;font-size:18px}
+.skor.aktif{background:#FFF3C4;outline:3px solid var(--emas)}
+.skor .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.skor .stm{font-size:14px;color:var(--teks2);display:block;font-weight:700}
+.skor .bt{font-family:var(--font-judul);font-size:22px;white-space:nowrap}
+.skor .pion-preview{width:40px;height:40px;font-size:22px;border-width:2px}
+.legenda{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:15px;font-weight:800}
+.legenda div{display:flex;align-items:center;gap:6px}
+.legenda i{width:22px;height:22px;border-radius:6px;flex:none;display:grid;place-items:center;font-style:normal;font-size:13px}
+.sikap{background:var(--hijau);color:#fff;font-weight:800;font-size:16px;text-align:center;border-color:var(--hijau)}
+
+/* ================= MODAL ================= */
+.modal{position:fixed;inset:0;background:rgba(30,20,8,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal.aktif{display:flex}
+.kartu-wrap{perspective:1400px;width:min(760px,94vw)}
+.kartu{position:relative;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,.7,.3,1.2)}
+.kartu.terbuka{transform:rotateY(180deg)}
+.sisi{backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:28px;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.sisi.belakang{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#111;font-family:var(--font-judul);font-size:36px;font-weight:700;border:8px solid #fff;min-height:300px}
+.sisi.belakang b{font-size:110px}
+.sisi.depan{transform:rotateY(180deg);background:#FFFDF7;border:8px solid;padding:22px 30px 26px;max-height:92vh;overflow:auto}
+.kepala-kartu{display:flex;align-items:center;gap:12px;font-family:var(--font-judul);font-size:28px;font-weight:700;padding:8px 16px;border-radius:16px;margin-bottom:14px;color:#111}
+.kepala-kartu b{font-size:40px}
+.teks-kartu{font-size:clamp(24px,2.6vw,32px);font-weight:800;line-height:1.3;margin-bottom:14px}
+.info-petak{font-size:24px;line-height:1.4;background:var(--krem);border-radius:16px;padding:12px 16px;margin-bottom:14px;font-weight:700;border-left:8px solid var(--emas)}
+.opsi{display:flex;flex-direction:column;gap:10px}
+.opsi button{background:#fff;border:3px solid var(--krem2);color:var(--teks);font-family:var(--font-isi);font-weight:800;font-size:24px;text-align:left;padding:10px 16px;display:flex;gap:12px;align-items:center;box-shadow:0 4px 0 var(--krem2)}
+.opsi button b{background:var(--hijau);color:#fff;border-radius:50%;width:40px;height:40px;display:grid;place-items:center;flex:none;font-family:var(--font-judul)}
+.opsi button:hover:not(:disabled){border-color:var(--emas)}
+.opsi button.benar{background:#DCFCE7;border-color:#15803D}
+.opsi button.salah{background:#FEE2E2;border-color:#B91C1C}
+.opsi button.kunci{outline:4px dashed #15803D;outline-offset:2px}
+.contoh{background:#ECFDF5;border:3px dashed #15803D;border-radius:16px;padding:12px 16px;font-size:24px;font-weight:700;margin:10px 0;display:none}
+.contoh.tampil{display:block}
+.umpan{font-family:var(--font-judul);font-size:28px;font-weight:700;text-align:center;margin:14px 0 6px;min-height:0}
+.umpan.ok{color:#15803D}.umpan.no{color:#B91C1C}
+.aksi{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.aksi button{font-size:24px}
+
+#modalGuru .panel-kertas{padding:22px 28px;width:min(640px,94vw)}
+.guru-grid{display:flex;flex-direction:column;gap:12px}
+.guru-baris{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:20px;font-weight:800}
+.guru-baris select{font:700 20px var(--font-isi);min-height:48px;border-radius:12px;border:2px solid var(--krem2);padding:0 8px;flex:1;color:var(--teks)}
+
+/* ================= LAYAR AKHIR ================= */
+#layarAkhir{flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center}
+.podium{display:flex;align-items:flex-end;gap:16px;margin-top:6px}
+.podium .tiang{width:170px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.podium .balok{width:100%;border-radius:16px 16px 0 0;display:flex;align-items:flex-start;justify-content:center;font-family:var(--font-judul);font-size:48px;color:#fff;padding-top:8px;box-shadow:var(--bayang)}
+.podium .nm{font-weight:800;font-size:22px}
+.podium .pion-preview{width:70px;height:70px;font-size:40px}
+.sertifikat{background:#FFFDF7;border:6px double var(--emas);border-radius:20px;padding:16px 40px;box-shadow:var(--bayang);position:relative;min-width:min(620px,90vw)}
+.sertifikat h2{font-size:34px;color:var(--hijau)}
+.sertifikat .nama-juara{font-family:var(--font-judul);font-size:40px;color:var(--emas-tua);border-bottom:3px dashed var(--emas);display:inline-block;padding:0 20px;margin:6px 0}
+.sertifikat p{font-size:18px;font-weight:700}
+#konfeti{position:fixed;inset:0;pointer-events:none;z-index:60}
+#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-150%);background:var(--hijau);color:#fff;font:700 22px var(--font-judul);padding:12px 26px;border-radius:30px;z-index:70;transition:transform .3s;box-shadow:var(--bayang);text-align:center;max-width:90vw}
+#toast.tampil{transform:translateX(-50%) translateY(0)}
+
+/* layar tegak (tablet portrait / ponsel) */
+@media (max-aspect-ratio:1/1){
+  body{overflow:auto;align-items:flex-start}
+  #app{width:100vw;height:auto;min-height:100vh}
+  .layar{position:relative;min-height:100vh}
+  #layarPapan{flex-direction:column;padding:10px}
+  #papanWrap{width:100%;height:auto}
+  #panelSamping{flex:none}
+}
+@media print{
+  body *{visibility:hidden}
+  .sertifikat,.sertifikat *{visibility:visible}
+  .sertifikat{position:fixed;top:30%;left:50%;transform:translateX(-50%)}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.05s!important}}
+</style>
+</head>
+<body>
+<script>
+/* =====================================================================
+   BANK SOAL — GURU BOLEH MENGEDIT BAGIAN INI
+   - "benar" = nomor opsi yang benar (0 = opsi pertama, 1 = kedua, 2 = ketiga)
+   - Kartu diacak dan tidak berulang sampai tumpukan habis.
+   ===================================================================== */
+
+// KARTU TANTANGAN: pilihan ganda, jawaban benar +2 bintang
+const KARTU_TANTANGAN = [
+  { tanya:"Urutan wilayah dari yang terkecil adalah...", opsi:["RT, RW, Desa/Kelurahan, Kecamatan, Kabupaten/Kota, Provinsi, Indonesia","RW, RT, Kecamatan, Desa, Provinsi, Kabupaten, Indonesia","Indonesia, Provinsi, Kabupaten, Kecamatan, Desa, RW, RT"], benar:0 },
+  { tanya:"Beberapa RT yang bergabung membentuk...", opsi:["RW","Provinsi","Kecamatan"], benar:0 },
+  { tanya:"Ibu kota Provinsi Riau adalah...", opsi:["Dumai","Pekanbaru","Siak"], benar:1 },
+  { tanya:"Tempat warga memeriksakan kesehatan adalah...", opsi:["Pasar","Lapangan","Puskesmas"], benar:2 },
+  { tanya:"Yang termasuk identitas tempat tinggal adalah...", opsi:["Nama jalan dan nomor rumah","Warna cat rumah","Nama hewan peliharaan"], benar:0 },
+  { tanya:"Pasar adalah tempat untuk...", opsi:["Belajar","Jual beli","Berobat"], benar:1 },
+  { tanya:"Provinsi Riau adalah bagian dari...", opsi:["NKRI","Malaysia","Singapura"], benar:0 },
+  { tanya:"Provinsi Riau terdiri dari 10 kabupaten dan ... kota.", opsi:["2","5","10"], benar:0 },
+];
+
+// KARTU KESEMPATAN: soal terbuka, dinilai guru/teman. Benar = maju sesuai "maju"
+const KARTU_KESEMPATAN = [
+  { tanya:"Sebutkan nama provinsi tempat tinggalmu.", contoh:"Provinsi Riau.", maju:2 },
+  { tanya:"Sebutkan satu tempat di sekitar rumahmu.", contoh:"Sekolah, masjid, pasar, puskesmas, lapangan.", maju:2 },
+  { tanya:"Sebutkan satu kabupaten atau kota di Riau.", contoh:"Kota Pekanbaru, Kota Dumai, Kabupaten Siak, Kabupaten Kuantan Singingi.", maju:2 },
+  { tanya:"Sebutkan satu makanan khas Riau.", contoh:"Gulai ikan patin, bolu kemojo, mie sagu, roti jala.", maju:1 },
+  { tanya:"Sebutkan satu ciri khas Riau.", contoh:"Bumi Lancang Kuning, rumah adat Selaso Jatuh Kembar, Istana Siak Sri Indrapura.", maju:1 },
+  { tanya:"Sebutkan nama jalan sekolahmu.", contoh:"Guru memeriksa nama jalan sekolah yang disebutkan.", maju:2 },
+];
+
+// KARTU DANA UMUM: situasi sehari-hari, dinilai guru/teman, benar +1 bintang
+const KARTU_DANA_UMUM = [
+  { tanya:"Kamu melihat sampah berserakan di sekitar rumah. Apa yang sebaiknya kamu lakukan?", contoh:"Memungut dan membuangnya ke tempat sampah, mengajak teman ikut membersihkan." },
+  { tanya:"Warga mengadakan gotong royong. Apa manfaatnya?", contoh:"Lingkungan bersih, pekerjaan cepat selesai, warga makin rukun." },
+  { tanya:"Kamu membantu menjaga kebersihan sekolah. Apa manfaatnya?", contoh:"Belajar jadi nyaman, terhindar dari penyakit." },
+  { tanya:"Ada keluarga baru pindah ke dekat rumahmu. Sikap apa yang baik?", contoh:"Menyapa dengan ramah, mengenalkan lingkungan sekitar." },
+  { tanya:"Lampu jalan di gang rumahmu mati. Kepada siapa sebaiknya hal itu disampaikan?", contoh:"Kepada orang tua atau ketua RT." },
+  { tanya:"Teman barumu berasal dari provinsi lain dan bahasanya berbeda. Bagaimana sikapmu?", contoh:"Menghargai dan berteman baik, karena Indonesia terdiri dari banyak daerah." },
+];
+
+// KARTU BONUS: langsung berlaku. jenis "maju" (langkah) atau "bintang"
+const KARTU_BONUS = [
+  { teks:"Kamu ikut kerja bakti di lingkungan RT. Maju 2 langkah.", jenis:"maju", n:2 },
+  { teks:"Kamu menyapa tetangga dengan sopan. Dapat 1 bintang.", jenis:"bintang", n:1 },
+  { teks:"Kamu membantu ibu berbelanja di pasar. Maju 2 langkah.", jenis:"maju", n:2 },
+  { teks:"Kamu ikut berlatih tari Zapin di sekolah. Maju 3 langkah.", jenis:"maju", n:3 },
+  { teks:"Kamu selalu membuang sampah pada tempatnya. Dapat 2 bintang.", jenis:"bintang", n:2 },
+  { teks:"Kamu hafal alamat rumahmu. Ucapkan alamatmu, lalu dapat 1 bintang.", jenis:"bintang", n:1 },
+];
+
+// KARTU HUKUMAN: jenis "mundur", "posbelajar", "tantangan", "kurang"
+const KARTU_HUKUMAN = [
+  { teks:"Kamu lupa fungsi pasar. Mundur 1 langkah, lalu baca kembali info petak Pasar.", jenis:"mundur", n:1, bacaPetak:6 },
+  { teks:"Kamu salah mengurutkan wilayah. Pergi ke Pos Belajar dan berhenti satu giliran.", jenis:"posbelajar" },
+  { teks:"Kamu belum bisa menyebutkan identitas tempat tinggal. Jawab satu Kartu Tantangan tambahan.", jenis:"tantangan" },
+  { teks:"Kamu membuang sampah ke sungai. Mundur 2 langkah. Sungai adalah sumber kehidupan warga.", jenis:"mundur", n:2 },
+  { teks:"Kamu lupa ibu kota Provinsi Riau. Mundur 1 langkah.", jenis:"mundur", n:1 },
+  { teks:"Kamu tidak ikut kerja bakti di sekolah. Bintangmu berkurang 1.", jenis:"kurang", n:1 },
+];
+
+// INFO PETAK LOKASI: info singkat (maks. 2 kalimat) + 1 soal pilihan ganda (+1 bintang & stempel)
+const INFO_PETAK = {
+  1:{ info:"Rumah adalah tempat tinggal kita bersama keluarga. Rumah punya alamat, yaitu nama jalan dan nomor rumah.", tanya:"Tempat tinggal kita bersama keluarga disebut...", opsi:["Rumah","Pasar","Kantor"], benar:0 },
+  3:{ info:"Sekolah adalah tempat kita belajar. Di sekolah ada guru dan teman-teman.", tanya:"Di sekolah, kita pergi untuk...", opsi:["Berobat","Belajar","Jual beli"], benar:1 },
+  4:{ info:"Puskesmas adalah tempat warga memeriksakan kesehatan. Di sana ada dokter dan perawat.", tanya:"Siapa yang bekerja di puskesmas?", opsi:["Pedagang","Petani","Dokter dan perawat"], benar:2 },
+  6:{ info:"Pasar adalah tempat penjual dan pembeli bertemu. Di pasar terjadi kegiatan jual beli.", tanya:"Kegiatan utama di pasar adalah...", opsi:["Jual beli","Belajar","Berobat"], benar:0 },
+  7:{ info:"Tempat ibadah adalah tempat warga beribadah sesuai agamanya. Contohnya masjid, gereja, pura, vihara, dan klenteng.", tanya:"Sikap yang baik di dekat tempat ibadah adalah...", opsi:["Berteriak-teriak","Menjaga ketenangan","Membuang sampah"], benar:1 },
+  9:{ info:"Lapangan adalah tempat warga berolahraga dan bermain. Lapangan juga dipakai untuk upacara dan acara bersama.", tanya:"Lapangan biasa dipakai untuk...", opsi:["Berobat","Menabung","Berolahraga"], benar:2 },
+  11:{ info:"Pos ronda adalah tempat warga berjaga malam. Ronda membuat lingkungan tetap aman.", tanya:"Apa manfaat ronda malam?", opsi:["Lingkungan aman","Jalan jadi rusak","Warga jadi bertengkar"], benar:0 },
+  12:{ info:"RT (Rukun Tetangga) adalah wilayah terkecil tempat tinggal kita. RT dipimpin oleh ketua RT.", tanya:"RT dipimpin oleh...", opsi:["Gubernur","Ketua RT","Camat"], benar:1 },
+  14:{ info:"RW (Rukun Warga) terdiri dari beberapa RT. RW dipimpin oleh ketua RW.", tanya:"RW terdiri dari beberapa...", opsi:["Provinsi","Kecamatan","RT"], benar:2 },
+  17:{ info:"Desa atau kelurahan terdiri dari beberapa RW. Desa dipimpin kepala desa, kelurahan dipimpin lurah.", tanya:"Kelurahan dipimpin oleh...", opsi:["Lurah","Bupati","Ketua RT"], benar:0 },
+  19:{ info:"Kecamatan terdiri dari beberapa desa atau kelurahan. Kecamatan dipimpin oleh camat.", tanya:"Kecamatan dipimpin oleh...", opsi:["Gubernur","Camat","Ketua RW"], benar:1 },
+  20:{ info:"Kabupaten atau kota terdiri dari beberapa kecamatan. Kabupaten dipimpin bupati, kota dipimpin wali kota.", tanya:"Kabupaten dipimpin oleh...", opsi:["Lurah","Camat","Bupati"], benar:2 },
+  22:{ info:"Provinsi Riau terdiri dari 10 kabupaten dan 2 kota. Ibu kotanya Pekanbaru dan dipimpin oleh gubernur.", tanya:"Provinsi dipimpin oleh...", opsi:["Gubernur","Ketua RT","Lurah"], benar:0 },
+  24:{ info:"Indonesia terdiri dari banyak provinsi, salah satunya Riau. Bendera kita Merah Putih dan lambang negara kita Garuda Pancasila.", tanya:"Lambang negara Indonesia adalah...", opsi:["Harimau","Garuda Pancasila","Gajah"], benar:1 },
+  25:{ info:"Riau dijuluki Bumi Lancang Kuning dan dihuni masyarakat Melayu. Riau punya rumah adat Selaso Jatuh Kembar dan Istana Siak Sri Indrapura.", tanya:"Julukan Provinsi Riau adalah...", opsi:["Kota Pahlawan","Pulau Dewata","Bumi Lancang Kuning"], benar:2 },
+  27:{ info:"Makanan khas Riau antara lain gulai ikan patin, bolu kemojo, mie sagu, dan roti jala.", tanya:"Mana yang termasuk makanan khas Riau?", opsi:["Gulai ikan patin","Gudeg","Pempek"], benar:0 },
+  29:{ info:"Kesenian Riau antara lain tari Zapin dan tari Makan Sirih. Ada juga tradisi Pacu Jalur dari Kuantan Singingi.", tanya:"Tradisi Pacu Jalur berasal dari...", opsi:["Dumai","Kuantan Singingi","Pekanbaru"], benar:1 },
+  31:{ info:"Riau punya Sungai Siak dan gelombang Bono di Sungai Kampar. Taman Nasional Tesso Nilo adalah rumah gajah Sumatera.", tanya:"Taman Nasional Tesso Nilo adalah rumah bagi...", opsi:["Komodo","Orangutan","Gajah Sumatera"], benar:2 },
+};
+
+/* ===================== AKHIR BANK SOAL ===================== */
+</script>
+
+<div id="app">
+  <!-- PEMBUKA -->
+  <section class="layar aktif" id="layarPembuka">
+    <div class="sudut tl"></div><div class="sudut tr"></div><div class="sudut bl"></div><div class="sudut br"></div>
+    <div class="rebung" style="width:min(700px,80%)"></div>
+    <div class="ilustrasi" aria-hidden="true"><span>🏰</span><span>🛶</span><span>🐘</span><span>🐟</span><span>🦅</span></div>
+    <h1 class="judul-utama">MONOPOLI<br>JELAJAH RIAU</h1>
+    <div class="subjudul">Petualangan Mengenal Tempat Tinggalku</div>
+    <div class="slogan-pita">Jelajahi Riau, Kenali Wilayahmu, Cintai Indonesia!</div>
+    <div class="baris-tombol">
+      <button class="btn btn-hijau btn-besar" onclick="keLayar('layarAtur')">▶ Mulai Petualangan</button>
+      <button class="btn btn-emas btn-besar" onclick="keLayar('layarCara')">❓ Cara Bermain</button>
+    </div>
+    <div class="info-kecil">Pendidikan Pancasila · Kelas 3 SD (Fase B)</div>
+    <div class="rebung bawah" style="width:min(700px,80%)"></div>
+  </section>
+
+  <!-- CARA BERMAIN -->
+  <section class="layar" id="layarCara">
+    <div class="panel-kertas">
+      <h2 class="judul-panel">❓ Cara Bermain</h2>
+      <div class="langkah">
+        <div><b>👫</b>1. Pilih pemain atau kelompok, lalu pilih pion.</div>
+        <div><b>🎲</b>2. Tekan LEMPAR DADU saat giliranmu.</div>
+        <div><b>👣</b>3. Pion berjalan sendiri searah jarum jam.</div>
+        <div><b>🏠</b>4. Berhenti di tempat? Baca info, jawab soal. Benar dapat ⭐ dan stempel.</div>
+        <div><b>🃏</b>5. Berhenti di petak kartu? Ambil kartu sesuai warnanya.</div>
+        <div><b>🏁</b>6. Lewat START dapat 1 ⭐.</div>
+        <div><b>🏆</b>7. Bintang terbanyak menang! Ingat: jujur, kerja sama, hargai teman.</div>
+      </div>
+      <div class="legenda-besar" id="legendaBesar"></div>
+      <div class="tengah"><button class="btn btn-hijau" onclick="keLayar('layarPembuka')">⬅ Kembali</button>
+        <button class="btn btn-emas" onclick="keLayar('layarAtur')">Mulai ▶</button></div>
+    </div>
+  </section>
+
+  <!-- PENGATURAN -->
+  <section class="layar" id="layarAtur">
+    <div class="panel-kertas">
+      <h2 class="judul-panel">⚙️ Siapa yang Bermain?</h2>
+      <div class="atur-baris">Jumlah pemain: <span id="pilihJumlah"></span></div>
+      <div class="atur-baris">Mode:
+        <button class="pilih on" data-mode="ronde" onclick="pilihMode('ronde')">🔁 3 Putaran</button>
+        <button class="pilih" data-mode="waktu" onclick="pilihMode('waktu')">⏱️ 20 Menit</button>
+      </div>
+      <div id="daftarPemain"></div>
+      <div class="tengah"><button class="btn btn-putih" onclick="keLayar('layarPembuka')">⬅ Kembali</button>
+        <button class="btn btn-hijau btn-besar" onclick="mulaiGame()">🚀 Ayo Main!</button></div>
+    </div>
+  </section>
+
+  <!-- PAPAN -->
+  <section class="layar" id="layarPapan">
+    <div id="papanWrap">
+      <div id="papan">
+        <div id="tengah">
+          <div class="sudut tl"></div><div class="sudut tr" ></div>
+          <div class="peta-box" id="petaBox"></div>
+          <div class="dadu-box">
+            <div class="giliran-mini" id="giliranMini"></div>
+            <div class="scene"><div id="dadu"></div></div>
+            <button id="tombolLempar" onclick="lemparDadu()">🎲 LEMPAR DADU</button>
+          </div>
+          <div class="tumpukan-baris" id="tumpukanBaris"></div>
+        </div>
+      </div>
+      <div id="lapisPion"></div>
+    </div>
+    <aside id="panelSamping">
+      <div class="atas-panel">
+        <div class="kotak" id="infoRonde">Putaran 1/3</div>
+        <button class="ikon-btn" id="tombolSuara" onclick="toggleSuara()" aria-label="Nyala/mati suara">🔊</button>
+        <button class="ikon-btn" onclick="bukaGuru()" aria-label="Mode Guru">🔒</button>
+      </div>
+      <div class="kotak" id="kotakGiliran"></div>
+      <div class="kotak" id="daftarSkor"></div>
+      <div class="kotak legenda" id="legenda"></div>
+      <div class="kotak sikap">🤝 Jujur · Bekerja sama · Menghargai teman</div>
+    </aside>
+  </section>
+
+  <!-- AKHIR -->
+  <section class="layar" id="layarAkhir">
+    <h1 class="judul-utama" style="font-size:clamp(32px,4vw,58px)">🎉 Petualangan Selesai! 🎉</h1>
+    <div class="podium" id="podium"></div>
+    <div class="sertifikat" id="sertifikat"></div>
+    <div class="baris-tombol">
+      <button class="btn btn-emas" onclick="window.print()">🖨️ Cetak Sertifikat</button>
+      <button class="btn btn-hijau" onclick="keLayar('layarAtur')">🔁 Main Lagi</button>
+    </div>
+  </section>
+</div>
+
+<!-- MODAL KARTU / INFO -->
+<div class="modal" id="modalKartu" role="dialog" aria-modal="true">
+  <div class="kartu-wrap"><div class="kartu" id="kartu">
+    <div class="sisi belakang" id="kartuBelakang"></div>
+    <div class="sisi depan" id="kartuDepan"></div>
+  </div></div>
+</div>
+
+<!-- MODAL GURU -->
+<div class="modal" id="modalGuru" role="dialog" aria-modal="true">
+  <div class="panel-kertas">
+    <h2 class="judul-panel">🔓 Mode Guru</h2>
+    <div class="guru-grid">
+      <div class="guru-baris"><button class="btn btn-emas" onclick="guruLewati()">⏭️ Lewati giliran</button>
+        <button class="btn btn-emas" id="tombolJeda" onclick="guruJeda()">⏸️ Jeda timer</button></div>
+      <div class="guru-baris"><select id="guruPemain"></select>
+        <button class="btn btn-hijau" onclick="guruBintang(1)">+1 ⭐</button>
+        <button class="btn btn-merah" onclick="guruBintang(-1)">−1 ⭐</button></div>
+      <div class="guru-baris"><button class="btn btn-putih" id="tombolKunci" onclick="guruKunci()">🔑 Kunci jawaban: MATI</button></div>
+      <div class="guru-baris"><button class="btn btn-putih" onclick="guruAkhiri()">🏁 Akhiri sekarang</button>
+        <button class="btn btn-merah" onclick="guruUlang()">🔄 Ulang permainan</button></div>
+      <div class="tengah"><button class="btn btn-hijau" onclick="tutupGuru()">Tutup</button></div>
+    </div>
+  </div>
+</div>
+
+<canvas id="konfeti"></canvas>
+<div id="toast"></div>
+
+<script>
+/* ===================== DATA PAPAN ===================== */
+const ZONA = { lingkungan:"Lingkunganku", wilayah:"Wilayahku", indonesia:"Indonesiaku", riau:"Riauku" };
+const JENIS_KARTU = {
+  tantangan:{ nama:"Kartu Tantangan", warna:"#3B82F6", ikon:"❓", data:KARTU_TANTANGAN },
+  kesempatan:{ nama:"Kartu Kesempatan", warna:"#FACC15", ikon:"💰", data:KARTU_KESEMPATAN },
+  dana:{ nama:"Kartu Dana Umum", warna:"#22C55E", ikon:"🍃", data:KARTU_DANA_UMUM },
+  bonus:{ nama:"Kartu Bonus", warna:"#A855F7", ikon:"⭐", data:KARTU_BONUS },
+  hukuman:{ nama:"Kartu Hukuman", warna:"#EF4444", ikon:"⚠️", data:KARTU_HUKUMAN },
+};
+const L = (nama,ikon,zona)=>({tipe:"lokasi",nama,ikon,zona});
+const K = jenis=>({tipe:"kartu",jenis,nama:JENIS_KARTU[jenis].nama.replace("Kartu ",""),ikon:JENIS_KARTU[jenis].ikon});
+const PETAK = [
+  {tipe:"pojok",nama:"START",ikon:"🚩",ket:"Mulai Petualangan"},
+  L("Rumahku","🏠","lingkungan"), K("tantangan"), L("Sekolah","🏫","lingkungan"), L("Puskesmas","🏥","lingkungan"),
+  K("kesempatan"), L("Pasar","🛒","lingkungan"), L("Tempat Ibadah","🕌","lingkungan"),
+  {tipe:"pojok",nama:"Pos Belajar",ikon:"📚",ket:"Berhenti 1 giliran"},
+  L("Lapangan","⚽","lingkungan"), K("dana"), L("Pos Ronda","🔦","lingkungan"), L("RT","🏘️","wilayah"),
+  K("bonus"), L("RW","🏡","wilayah"), K("tantangan"),
+  {tipe:"pojok",nama:"Balai Gotong Royong",ikon:"🤝",ket:"Aman, +1 ⭐"},
+  L("Desa/ Kelurahan","🌾","wilayah"), K("hukuman"), L("Kecamatan","🏢","wilayah"), L("Kabupaten/ Kota","🏙️","wilayah"),
+  K("kesempatan"), L("Provinsi Riau","🗺️","wilayah"), K("dana"),
+  {tipe:"pojok",nama:"NKRI",ikon:"🦅",ket:"Indonesiaku",zona:"indonesia",lokasi:true},
+  L("Ciri Khas Riau","🏰","riau"), K("tantangan"), L("Makanan Khas","🍲","riau"), K("bonus"),
+  L("Kesenian Riau","💃","riau"), K("hukuman"), L("Alam Riau","🐘","riau"),
+];
+const POS_BELAJAR = 8, BALAI = 16;
+const PION = [
+  {ikon:"🐘",nama:"Gajah",warna:"#DC2626"},{ikon:"🛶",nama:"Perahu Jalur",warna:"#2563EB"},
+  {ikon:"🐟",nama:"Ikan Patin",warna:"#16A34A"},{ikon:"🐦",nama:"Burung Serindit",warna:"#CA8A04"},
+  {ikon:"🏠",nama:"Rumah Selaso",warna:"#9333EA"},{ikon:"🌺",nama:"Bunga",warna:"#EA580C"},
+];
+const NAMA_DEFAULT = ["Kelompok Gajah","Kelompok Jalur","Kelompok Patin","Kelompok Serindit","Kelompok Selaso","Kelompok Bunga"];
+
+/* ===================== STATE ===================== */
+const S = { jumlah:4, mode:"ronde", pemain:[], giliran:0, ronde:1, maxRonde:3, sisaDetik:1200, jeda:false, sibuk:false, selesai:false, kunci:false, timer:null, deck:{} };
+let suaraOn = true, audioCtx = null;
+const $ = id=>document.getElementById(id);
+const tunggu = ms=>new Promise(r=>setTimeout(r,ms));
+
+/* ===================== SUARA (WebAudio, tanpa file) ===================== */
+function nada(freq,dur,tipe="sine",vol=.15,delay=0){
+  if(!suaraOn) return;
+  try{
+    audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+    const t=audioCtx.currentTime+delay, o=audioCtx.createOscillator(), g=audioCtx.createGain();
+    o.type=tipe; o.frequency.setValueAtTime(freq,t);
+    g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    o.connect(g).connect(audioCtx.destination); o.start(t); o.stop(t+dur);
+  }catch(e){}
+}
+const SFX = {
+  dadu(){ for(let i=0;i<8;i++) nada(200+Math.random()*300,.05,"square",.06,i*.07); },
+  langkah(){ nada(520,.08,"triangle",.12); },
+  benar(){ [523,659,784,1046].forEach((f,i)=>nada(f,.18,"triangle",.14,i*.1)); },
+  salah(){ nada(300,.2,"sawtooth",.08); nada(220,.3,"sawtooth",.08,.18); },
+  kartu(){ nada(700,.06,"sine",.1); nada(950,.08,"sine",.1,.07); },
+  menang(){ [523,659,784,659,784,1046].forEach((f,i)=>nada(f,.25,"triangle",.15,i*.15)); },
+};
+function toggleSuara(){ suaraOn=!suaraOn; $("tombolSuara").textContent=suaraOn?"🔊":"🔇"; }
+
+/* ===================== DECK ACAK ===================== */
+function acak(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function ambilKartu(jenis){
+  if(!S.deck[jenis] || !S.deck[jenis].length) S.deck[jenis]=acak(JENIS_KARTU[jenis].data);
+  return S.deck[jenis].pop();
+}
+
+/* ===================== NAVIGASI ===================== */
+function keLayar(id){
+  document.querySelectorAll(".layar").forEach(l=>l.classList.toggle("aktif",l.id===id));
+  if(id==="layarAtur") renderAtur();
+  if(id==="layarPapan") requestAnimationFrame(posisiSemuaPion);
+}
+function toast(t,ms=2200){ const el=$("toast"); el.textContent=t; el.classList.add("tampil"); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove("tampil"),ms); }
+
+/* ===================== PENGATURAN ===================== */
+function renderAtur(){
+  $("pilihJumlah").innerHTML=[2,3,4,5,6].map(n=>`<button class="pilih ${n===S.jumlah?"on":""}" onclick="pilihJumlah(${n})">${n}</button>`).join(" ");
+  const lama=[...document.querySelectorAll("#daftarPemain .kartu-pemain")].map(k=>({nama:k.querySelector("input").value,pion:+k.querySelector("select").value}));
+  let html="";
+  for(let i=0;i<S.jumlah;i++){
+    const p=lama[i]||{nama:NAMA_DEFAULT[i],pion:i}, pi=PION[p.pion];
+    html+=`<div class="kartu-pemain" style="border-color:${pi.warna}">
+      <div class="pion-preview" style="background:${pi.warna}">${pi.ikon}</div>
+      <input value="${p.nama.replace(/"/g,"&quot;")}" maxlength="20" aria-label="Nama pemain ${i+1}">
+      <select aria-label="Pion pemain ${i+1}" onchange="gantiPion(this)">${PION.map((x,j)=>`<option value="${j}" ${j===p.pion?"selected":""}>${x.ikon} ${x.nama}</option>`).join("")}</select></div>`;
+  }
+  $("daftarPemain").innerHTML=html;
+}
+function pilihJumlah(n){ S.jumlah=n; renderAtur(); }
+function pilihMode(m){ S.mode=m; document.querySelectorAll("[data-mode]").forEach(b=>b.classList.toggle("on",b.dataset.mode===m)); }
+function gantiPion(sel){ const k=sel.closest(".kartu-pemain"), pi=PION[+sel.value]; k.style.borderColor=pi.warna; const pv=k.querySelector(".pion-preview"); pv.style.background=pi.warna; pv.textContent=pi.ikon; }
+
+function mulaiGame(){
+  const data=[...document.querySelectorAll("#daftarPemain .kartu-pemain")].map((k,i)=>({nama:k.querySelector("input").value.trim()||NAMA_DEFAULT[i],pion:+k.querySelector("select").value}));
+  const dipakai=data.map(d=>d.pion);
+  if(new Set(dipakai).size!==dipakai.length){ toast("Setiap pemain harus memilih pion yang berbeda ya!"); return; }
+  S.pemain=data.map(d=>({...d,pos:0,bintang:0,stempel:[],skip:false}));
+  Object.assign(S,{giliran:0,ronde:1,sisaDetik:1200,jeda:false,sibuk:false,selesai:false,deck:{}});
+  clearInterval(S.timer);
+  if(S.mode==="waktu") S.timer=setInterval(tickTimer,1000);
+  buatPion(); keLayar("layarPapan"); renderPanel();
+}
+function tickTimer(){
+  if(S.jeda||S.selesai) return;
+  S.sisaDetik=Math.max(0,S.sisaDetik-1); renderInfoRonde();
+  if(S.sisaDetik===0 && !S.sibuk) akhiriGame();
+}
+
+/* ===================== PAPAN ===================== */
+function koordinat(i){
+  if(i===0) return [9,9];
+  if(i<8) return [9,9-i];
+  if(i===8) return [9,1];
+  if(i<16) return [9-(i-8),1];
+  if(i===16) return [1,1];
+  if(i<24) return [1,1+(i-16)];
+  if(i===24) return [1,9];
+  return [1+(i-24),9];
+}
+function buatPapan(){
+  const papan=$("papan");
+  PETAK.forEach((p,i)=>{
+    const el=document.createElement("div"), [r,c]=koordinat(i);
+    el.className="petak"; el.id="petak"+i; el.style.gridArea=`${r}/${c}`;
+    let strip="";
+    if(p.tipe==="lokasi") strip=`<div class="strip ${p.zona}"></div>`;
+    if(p.tipe==="kartu"){ el.classList.add("kartu"); el.style.background=JENIS_KARTU[p.jenis].warna; }
+    if(p.tipe==="pojok"){ el.classList.add("pojok"); if(i===24){ el.classList.add("nkri"); strip=`<div class="strip indonesia"></div>`; } }
+    el.innerHTML=`${strip}<div class="ikon">${p.ikon}</div><div class="nama">${p.nama}</div>${p.ket?`<div class="nama" style="font-size:12px;font-family:var(--font-isi);font-weight:800;color:#5A4630">${p.ket}</div>`:""}<span class="stempelku"></span>`;
+    el.title=p.nama;
+    papan.appendChild(el);
+  });
+  // peta Riau
+  $("petaBox").innerHTML=`
+  <svg viewBox="0 0 320 240" role="img" aria-label="Peta Provinsi Riau dengan Pekanbaru sebagai ibu kota">
+    <defs><filter id="timbul" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="6" stdDeviation="0" flood-color="#1F5A3A" flood-opacity=".55"/><feDropShadow dx="0" dy="10" stdDeviation="6" flood-color="#000" flood-opacity=".18"/></filter>
+    <linearGradient id="gPeta" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7BC47F"/><stop offset="1" stop-color="#3E9B5C"/></linearGradient>
+    <path id="lengkung" d="M14 196 Q160 236 306 196"/></defs>
+    <g filter="url(#timbul)" stroke="#F3E4C4" stroke-width="3" fill="url(#gPeta)">
+      <path d="M40 120 C48 92 70 78 92 66 C110 56 124 40 146 38 C168 36 182 50 200 46 C214 42 226 30 240 36 C252 42 248 58 262 64 C276 70 290 76 288 94 C286 110 270 116 262 130 C254 146 262 162 248 172 C232 184 210 176 192 186 C172 196 150 194 132 184 C112 174 96 180 80 170 C62 158 46 150 40 120Z"/>
+      <path d="M232 22 C240 14 254 16 256 26 C258 34 246 38 238 34Z"/>
+      <path d="M268 40 C276 34 288 38 286 48 C284 56 272 56 268 50Z"/>
+      <path d="M294 62 C300 58 308 64 304 72 C300 78 292 72 294 62Z"/>
+    </g>
+    <path d="M100 150 C130 130 160 120 230 70" stroke="#60A5FA" stroke-width="3" fill="none" stroke-linecap="round" opacity=".9"/>
+    <text x="160" y="104" text-anchor="middle" font-family="Fredoka,Arial Rounded MT Bold,sans-serif" font-weight="700" font-size="22" fill="#fff" stroke="#1F5A3A" stroke-width="4" paint-order="stroke">PROVINSI RIAU</text>
+    <circle cx="150" cy="128" r="7" fill="#DC2626" stroke="#fff" stroke-width="3"/>
+    <text x="150" y="152" text-anchor="middle" font-family="Nunito,sans-serif" font-weight="800" font-size="13" fill="#2A1E10" stroke="#FFFDF7" stroke-width="3" paint-order="stroke">Pekanbaru (Ibu Kota)</text>
+    <text font-family="Fredoka,Arial Rounded MT Bold,sans-serif" font-weight="700" font-size="12.5" fill="#1F5A3A"><textPath href="#lengkung" startOffset="50%" text-anchor="middle">Jelajahi Riau, Kenali Wilayahmu, Cintai Indonesia!</textPath></text>
+  </svg>
+  <div class="ikon-peta" style="left:2%;top:2%">🏰<small>Istana Siak</small></div>
+  <div class="ikon-peta" style="right:0;top:2%">🏠<small>Selaso Jatuh Kembar</small></div>
+  <div class="ikon-peta" style="left:0;top:58%">🐘<small>Gajah Sumatera</small></div>
+  <div class="ikon-peta" style="right:0;top:60%">🛶<small>Pacu Jalur</small></div>
+  <div class="ikon-peta" style="left:44%;top:0">🐟<small>Ikan Patin</small></div>`;
+  // tumpukan kartu
+  $("tumpukanBaris").innerHTML=Object.entries(JENIS_KARTU).map(([k,v])=>`<button class="tumpukan" id="deck-${k}" style="background:${v.warna}" onclick="klikTumpukan('${k}')" aria-label="${v.nama}">${v.ikon}<span>${v.nama.replace("Kartu ","")}</span></button>`).join("");
+  // dadu
+  const titik={1:[5],2:[1,9],3:[1,5,9],4:[1,3,7,9],5:[1,3,5,7,9],6:[1,3,4,6,7,9]};
+  const rot={1:"rotateY(0deg)",2:"rotateY(-90deg)",3:"rotateX(-90deg)",4:"rotateX(90deg)",5:"rotateY(90deg)",6:"rotateY(180deg)"};
+  $("dadu").innerHTML=[1,2,3,4,5,6].map(n=>`<div class="muka m${n}" style="transform:${rot[n]} translateZ(calc(var(--s)/2))">${[1,2,3,4,5,6,7,8,9].map(c=>titik[n].includes(c)?"<i></i>":"<span></span>").join("")}</div>`).join("");
+  // legenda
+  const leg=Object.values(JENIS_KARTU).map(v=>`<div><i style="background:${v.warna}">${v.ikon}</i>${v.nama.replace("Kartu ","")}</div>`).join("")+
+    `<div><i style="background:var(--z-lingkungan)"></i>Lingkunganku</div><div><i style="background:var(--z-wilayah)"></i>Wilayahku</div><div><i style="background:linear-gradient(#E11D2A 50%,#fff 50%);border:1px solid #ccc"></i>Indonesiaku</div><div><i style="background:var(--z-riau)"></i>Riauku</div>`;
+  $("legenda").innerHTML=leg;
+  $("legendaBesar").innerHTML=Object.values(JENIS_KARTU).map(v=>`<span style="background:${v.warna};color:#111;font-weight:800;font-size:20px;padding:8px 16px;border-radius:14px">${v.ikon} ${v.nama}</span>`).join("");
+  ukurDadu();
+}
+function ukurDadu(){ const sc=document.querySelector(".scene"); $("dadu").style.setProperty("--s",sc.offsetWidth+"px"); }
+
+/* ===================== PION ===================== */
+function buatPion(){
+  $("lapisPion").innerHTML=S.pemain.map((p,i)=>`<div class="pion" id="pion${i}" style="background:${PION[p.pion].warna}" title="${p.nama}">${PION[p.pion].ikon}</div>`).join("");
+}
+function posisiSemuaPion(){
+  ukurDadu();
+  const lap=$("lapisPion").getBoundingClientRect();
+  const grup={}; S.pemain.forEach((p,i)=>(grup[p.pos]=grup[p.pos]||[]).push(i));
+  const offset=[[0,0]],o2=[[-.22,0],[.22,0]],o3=[[-.22,-.12],[.22,-.12],[0,.2]],o4=[[-.22,-.18],[.22,-.18],[-.22,.2],[.22,.2]],o6=[[-.25,-.2],[0,-.2],[.25,-.2],[-.25,.2],[0,.2],[.25,.2]];
+  Object.entries(grup).forEach(([pos,ids])=>{
+    const r=$("petak"+pos).getBoundingClientRect();
+    const pola=[offset,offset,o2,o3,o4,o6,o6][ids.length];
+    ids.forEach((id,k)=>{
+      const el=$("pion"+id), [dx,dy]=pola[k];
+      el.style.left=(r.left-lap.left+r.width*(.5+dx))+"px";
+      el.style.top=(r.top-lap.top+r.height*(.55+dy))+"px";
+      el.classList.toggle("giliran",id===S.giliran);
+    });
+  });
+}
+window.addEventListener("resize",()=>{ if($("layarPapan").classList.contains("aktif")) posisiSemuaPion(); });
+
+/* ===================== PANEL ===================== */
+function renderInfoRonde(){
+  if(S.mode==="ronde") $("infoRonde").textContent=`🔁 Putaran ${Math.min(S.ronde,S.maxRonde)} dari ${S.maxRonde}`;
+  else { const m=Math.floor(S.sisaDetik/60), d=S.sisaDetik%60; $("infoRonde").textContent=`⏱️ Sisa ${m}:${String(d).padStart(2,"0")}${S.jeda?" (jeda)":""}`; }
+}
+function renderPanel(){
+  renderInfoRonde();
+  const p=S.pemain[S.giliran], pi=PION[p.pion];
+  $("kotakGiliran").innerHTML=`<div class="pion-preview" style="background:${pi.warna}">${pi.ikon}</div><div>Giliran:<br><span style="font-family:var(--font-judul);font-size:24px">${p.nama}</span></div>`;
+  $("giliranMini").innerHTML=`Giliran <span style="color:${pi.warna}">${p.nama}</span>`;
+  $("daftarSkor").innerHTML=S.pemain.map((q,i)=>`<div class="skor ${i===S.giliran?"aktif":""}" style="border-color:${PION[q.pion].warna}">
+    <div class="pion-preview" style="background:${PION[q.pion].warna}">${PION[q.pion].ikon}</div>
+    <div class="nm">${q.nama}${q.skip?" 💤":""}<span class="stm">📮 Stempel: ${q.stempel.length}</span></div><div class="bt">⭐ ${q.bintang}</div></div>`).join("");
+  document.querySelectorAll(".stempelku").forEach(s=>s.textContent="");
+  S.pemain.forEach(q=>q.stempel.forEach(st=>{ $("petak"+st).querySelector(".stempelku").textContent+=PION[q.pion].ikon; }));
+  $("tombolLempar").disabled=S.sibuk||S.selesai;
+  posisiSemuaPion();
+}
+function tambahBintang(p,n){ p.bintang=Math.max(0,p.bintang+n); renderPanel(); }
+
+/* ===================== DADU & GERAK ===================== */
+async function lemparDadu(){
+  if(S.sibuk||S.selesai) return;
+  S.sibuk=true; renderPanel();
+  const n=1+Math.floor(Math.random()*6);
+  const akhir={1:[0,0],2:[0,90],3:[90,0],4:[-90,0],5:[0,-90],6:[0,180]}[n];
+  const putar=(1+Math.floor(Math.random()*2))*360;
+  SFX.dadu();
+  $("dadu").style.transform=`rotateX(${akhir[0]+putar+720}deg) rotateY(${akhir[1]+putar}deg)`;
+  await tunggu(1100);
+  toast(`🎲 Dadu: ${n}`,1400);
+  const p=S.pemain[S.giliran];
+  await jalan(p,n);
+  await prosesPetak(p);
+  akhirGiliran();
+}
+async function jalan(p,n){
+  const arah=n>0?1:-1, id=S.pemain.indexOf(p);
+  for(let k=0;k<Math.abs(n);k++){
+    p.pos=(p.pos+arah+32)%32;
+    if(arah>0 && p.pos===0){ p.bintang++; toast("🏁 Melewati START! +1 ⭐"); SFX.benar(); }
+    const el=$("pion"+id); el.classList.remove("lompat"); void el.offsetWidth; el.classList.add("lompat");
+    SFX.langkah(); renderPanel();
+    document.querySelectorAll(".petak.sorot").forEach(e=>e.classList.remove("sorot")); $("petak"+p.pos).classList.add("sorot");
+    await tunggu(320);
+  }
+  setTimeout(()=>document.querySelectorAll(".petak.sorot").forEach(e=>e.classList.remove("sorot")),900);
+}
+function akhirGiliran(){
+  if(S.selesai) return;
+  let lanjut=true, putaran=0;
+  while(lanjut){
+    S.giliran=(S.giliran+1)%S.pemain.length;
+    if(S.giliran===0){ S.ronde++; putaran++; }
+    const p=S.pemain[S.giliran];
+    if(p.skip){ p.skip=false; toast(`💤 ${p.nama} sedang di Pos Belajar, berhenti satu giliran.`,2600); }
+    else lanjut=false;
+    if(putaran>1) lanjut=false;
+  }
+  S.sibuk=false;
+  if((S.mode==="ronde" && S.ronde>S.maxRonde) || (S.mode==="waktu" && S.sisaDetik<=0)){ akhiriGame(); return; }
+  renderPanel();
+}
+
+/* ===================== PETAK ===================== */
+async function prosesPetak(p){
+  const pt=PETAK[p.pos];
+  if(pt.tipe==="lokasi" || pt.lokasi){ await popupLokasi(p,p.pos,true); return; }
+  if(pt.tipe==="kartu"){ await ambilDanTampilkan(p,pt.jenis); return; }
+  if(p.pos===BALAI){ tambahBintang(p,1); SFX.benar(); await pesan({warna:"#E9C46A",ikon:"🤝",judul:"Balai Gotong Royong",teks:"Petak aman! Gotong royong membuat kita rukun. Kamu dapat +1 ⭐"}); }
+  else if(p.pos===POS_BELAJAR){ await pesan({warna:"#E9C46A",ikon:"📚",judul:"Pos Belajar",teks:"Kamu hanya mampir. Ayo terus belajar mengenal tempat tinggalmu!"}); }
+}
+
+/* ===== modal generik ===== */
+let resolveModal=null;
+function bukaModal(warna,ikon,judul,html){
+  return new Promise(res=>{
+    resolveModal=res;
+    const k=$("kartu"); k.classList.remove("terbuka");
+    $("kartuBelakang").style.background=warna;
+    $("kartuBelakang").innerHTML=`<b>${ikon}</b>${judul}`;
+    const d=$("kartuDepan"); d.style.borderColor=warna;
+    d.innerHTML=`<div class="kepala-kartu" style="background:${warna}"><b>${ikon}</b>${judul}</div>${html}`;
+    $("modalKartu").classList.add("aktif"); SFX.kartu();
+    setTimeout(()=>{ k.classList.add("terbuka"); terapkanKunci(); const f=d.querySelector("button"); f&&f.focus({preventScroll:true}); },450);
+  });
+}
+function tutupModal(v){ $("modalKartu").classList.remove("aktif"); const r=resolveModal; resolveModal=null; r&&r(v); }
+function pesan({warna,ikon,judul,teks,tombol="Oke 👍"}){
+  return bukaModal(warna,ikon,judul,`<div class="teks-kartu">${teks}</div><div class="aksi"><button class="btn btn-hijau" onclick="tutupModal(true)">${tombol}</button></div>`);
+}
+
+/* ===== pilihan ganda ===== */
+function pilihanGanda({warna,ikon,judul,info,tanya,opsi,benar,hadiah}){
+  const huruf="ABC";
+  const html=`${info?`<div class="info-petak">ℹ️ ${info}</div>`:""}<div class="teks-kartu">${tanya}</div>
+    <div class="opsi">${opsi.map((o,i)=>`<button data-i="${i}" data-benar="${i===benar}" onclick="jawabPG(this)"><b>${huruf[i]}</b>${o}</button>`).join("")}</div>
+    <div class="umpan" id="umpan"></div><div class="aksi" id="aksiPG" style="display:none"><button class="btn btn-hijau" onclick="tutupModal(window._hasilPG)">Lanjut ▶</button></div>`;
+  return bukaModal(warna,ikon,judul,html);
+}
+function jawabPG(btn){
+  const semua=[...btn.parentNode.children], ok=btn.dataset.benar==="true";
+  semua.forEach(b=>{ b.disabled=true; if(b.dataset.benar==="true") b.classList.add("benar"); });
+  if(!ok) btn.classList.add("salah");
+  const u=$("umpan"); u.className="umpan "+(ok?"ok":"no");
+  u.textContent=ok?"🎉 Hebat, jawabanmu benar!":"🙂 Belum tepat. Jawaban yang benar sudah ditandai hijau.";
+  ok?SFX.benar():SFX.salah();
+  window._hasilPG=ok; $("aksiPG").style.display="flex";
+}
+
+/* ===== soal terbuka ===== */
+function soalTerbuka({warna,ikon,judul,tanya,contoh,ketBenar}){
+  const html=`<div class="teks-kartu">${tanya}</div>
+    <div class="info-petak" style="font-size:20px">🗣️ Jawab dengan suara lantang. Guru atau teman menilai dengan jujur.</div>
+    <div class="contoh" id="contoh">💡 Contoh jawaban: ${contoh}</div>
+    <div class="aksi"><button class="btn btn-putih" onclick="$('contoh').classList.add('tampil');this.remove()">💡 Lihat Contoh Jawaban</button></div>
+    <div class="aksi"><button class="btn btn-hijau" onclick="nilaiTerbuka(true)">✅ Benar</button><button class="btn btn-merah" onclick="nilaiTerbuka(false)">🔁 Belum Tepat</button></div>
+    <div style="text-align:center;font-weight:800;font-size:20px;margin-top:8px;color:#5A4630">${ketBenar}</div>`;
+  return bukaModal(warna,ikon,judul,html);
+}
+function nilaiTerbuka(ok){ ok?SFX.benar():SFX.salah(); tutupModal(ok); }
+
+/* ===== lokasi ===== */
+async function popupLokasi(p,pos,denganSoal){
+  const pt=PETAK[pos], d=INFO_PETAK[pos], zona=pt.zona||"indonesia";
+  const warna={lingkungan:"#FDBA74",wilayah:"#E7CBA9",indonesia:"#FCA5A5",riau:"#E9C46A"}[zona];
+  const judul=`${pt.nama.replace("/ ","/")} · Zona ${ZONA[zona]}`;
+  if(!denganSoal){ await pesan({warna,ikon:pt.ikon,judul,teks:`<div class="info-petak" style="margin:0">ℹ️ ${d.info}</div>`}); return; }
+  const ok=await pilihanGanda({warna,ikon:pt.ikon,judul,info:d.info,tanya:d.tanya,opsi:d.opsi,benar:d.benar});
+  if(ok){
+    p.bintang++;
+    if(!p.stempel.includes(pos)){ p.stempel.push(pos); toast(`📮 +1 ⭐ dan stempel ${pt.nama.replace("/ ","/")}!`); }
+    else toast("+1 ⭐");
+    renderPanel();
+  }
+}
+
+/* ===== kartu ===== */
+let kartuMenunggu=null;
+function ambilDanTampilkan(p,jenis){
+  return new Promise(res=>{
+    const deck=$("deck-"+jenis); deck.classList.add("nyala");
+    toast(`👆 Ambil ${JENIS_KARTU[jenis].nama} di tengah papan!`,2500);
+    kartuMenunggu={jenis,res:async()=>{ deck.classList.remove("nyala"); await bukaKartu(p,jenis); res(); }};
+  });
+}
+function klikTumpukan(jenis){
+  if(kartuMenunggu && kartuMenunggu.jenis===jenis){ const k=kartuMenunggu; kartuMenunggu=null; k.res(); }
+  else if(kartuMenunggu) toast("Ambil kartu yang menyala ya! ✨");
+  else toast(`${JENIS_KARTU[jenis].nama}: ${JENIS_KARTU[jenis].data.length} kartu`);
+}
+async function bukaKartu(p,jenis){
+  const J=JENIS_KARTU[jenis], c=ambilKartu(jenis), base={warna:J.warna,ikon:J.ikon,judul:J.nama};
+  if(jenis==="tantangan"){
+    const ok=await pilihanGanda({...base,tanya:c.tanya,opsi:c.opsi,benar:c.benar});
+    if(ok){ tambahBintang(p,2); toast("+2 ⭐ Luar biasa!"); }
+  } else if(jenis==="kesempatan"){
+    const ok=await soalTerbuka({...base,tanya:c.tanya,contoh:c.contoh,ketBenar:`Jika benar: maju ${c.maju} langkah 👣`});
+    if(ok) await jalan(p,c.maju);
+  } else if(jenis==="dana"){
+    const ok=await soalTerbuka({...base,tanya:c.tanya,contoh:c.contoh,ketBenar:"Jika benar: +1 ⭐"});
+    if(ok){ tambahBintang(p,1); toast("+1 ⭐"); }
+  } else if(jenis==="bonus"){
+    SFX.benar();
+    await pesan({...base,teks:c.teks,tombol:"Asyik! 🎉"});
+    if(c.jenis==="maju") await jalan(p,c.n); else tambahBintang(p,c.n);
+  } else if(jenis==="hukuman"){
+    SFX.salah();
+    await pesan({...base,teks:c.teks,tombol:"Baik, aku belajar lagi 💪"});
+    if(c.jenis==="mundur"){ await jalan(p,-c.n); if(c.bacaPetak!=null) await popupLokasi(p,c.bacaPetak,false); }
+    else if(c.jenis==="posbelajar"){ p.pos=POS_BELAJAR; p.skip=true; renderPanel(); toast("📚 Menuju Pos Belajar..."); await tunggu(600); }
+    else if(c.jenis==="tantangan"){ await ambilDanTampilkan(p,"tantangan"); }
+    else if(c.jenis==="kurang"){ tambahBintang(p,-c.n); }
+  }
+}
+
+/* ===================== MODE GURU ===================== */
+function bukaGuru(){
+  $("guruPemain").innerHTML=S.pemain.map((p,i)=>`<option value="${i}">${PION[p.pion].ikon} ${p.nama} (⭐${p.bintang})</option>`).join("");
+  $("guruPemain").value=S.giliran;
+  $("tombolJeda").textContent=S.jeda?"▶️ Lanjutkan timer":"⏸️ Jeda timer";
+  $("tombolJeda").disabled=S.mode!=="waktu";
+  $("modalGuru").classList.add("aktif");
+}
+function tutupGuru(){ $("modalGuru").classList.remove("aktif"); }
+function guruLewati(){
+  if(S.sibuk){ toast("Tunggu sampai giliran ini selesai ya."); return; }
+  toast(`⏭️ Giliran ${S.pemain[S.giliran].nama} dilewati`); akhirGiliran(); tutupGuru();
+}
+function guruJeda(){ S.jeda=!S.jeda; renderInfoRonde(); bukaGuru(); }
+function guruBintang(n){ const i=+$("guruPemain").value; tambahBintang(S.pemain[i],n); bukaGuru(); $("guruPemain").value=i; }
+function guruKunci(){ S.kunci=!S.kunci; $("tombolKunci").textContent=`🔑 Kunci jawaban: ${S.kunci?"NYALA":"MATI"}`; terapkanKunci(); }
+function terapkanKunci(){ document.querySelectorAll(".opsi button").forEach(b=>b.classList.toggle("kunci",S.kunci&&b.dataset.benar==="true")); if(S.kunci){ const c=$("contoh"); c&&c.classList.add("tampil"); } }
+function guruAkhiri(){ tutupGuru(); if(resolveModal) tutupModal(false); akhiriGame(); }
+function guruUlang(){ if(!confirm("Ulang permainan dari awal?")) return; tutupGuru(); if(resolveModal) tutupModal(false); clearInterval(S.timer); S.selesai=true; kartuMenunggu=null; document.querySelectorAll(".tumpukan").forEach(t=>t.classList.remove("nyala")); keLayar("layarAtur"); }
+
+/* ===================== AKHIR ===================== */
+function akhiriGame(){
+  if(S.selesai && $("layarAkhir").classList.contains("aktif")) return;
+  S.selesai=true; clearInterval(S.timer);
+  const urut=S.pemain.slice().sort((a,b)=>b.bintang-a.bintang||b.stempel.length-a.stempel.length);
+  const tinggi=[190,140,100], warna=["#CA8A04","#64748B","#B45309"], susun=[1,0,2];
+  $("podium").innerHTML=susun.filter(i=>urut[i]).map(i=>{ const p=urut[i], pi=PION[p.pion];
+    return `<div class="tiang"><div class="pion-preview" style="background:${pi.warna}">${pi.ikon}</div><div class="nm">${p.nama}</div><div style="font-weight:800;font-size:18px">⭐ ${p.bintang} · 📮 ${p.stempel.length}</div><div class="balok" style="height:${tinggi[i]*.75}px;background:${warna[i]}">${i+1}</div></div>`; }).join("");
+  const j=urut[0], seri=urut.filter(p=>p.bintang===j.bintang&&p.stempel.length===j.stempel.length);
+  $("sertifikat").innerHTML=`<div class="rebung"></div><h2>🏅 Sertifikat Penjelajah Riau Hebat</h2><p>Diberikan kepada</p>
+    <div class="nama-juara">${seri.map(p=>p.nama).join(" & ")}</div>
+    <p>atas semangat menjelajah Riau dengan ⭐ ${j.bintang} bintang dan 📮 ${j.stempel.length} stempel.</p>
+    <p style="color:#1F5A3A">Jelajahi Riau, Kenali Wilayahmu, Cintai Indonesia!</p><p style="font-size:15px;color:#5A4630">${new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"})}</p><div class="rebung bawah"></div>`;
+  keLayar("layarAkhir"); SFX.menang(); konfeti();
+}
+function konfeti(){
+  const cv=$("konfeti"), ctx=cv.getContext("2d"); cv.width=innerWidth; cv.height=innerHeight;
+  const warna=["#3B82F6","#FACC15","#22C55E","#A855F7","#EF4444","#B8913A"];
+  const bag=Array.from({length:160},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height,w:6+Math.random()*8,h:10+Math.random()*8,v:2+Math.random()*3,r:Math.random()*6,vr:(Math.random()-.5)*.2,c:warna[Math.floor(Math.random()*6)]}));
+  let t=0;
+  (function loop(){ ctx.clearRect(0,0,cv.width,cv.height);
+    bag.forEach(b=>{ b.y+=b.v; b.x+=Math.sin((t+b.r)*.05); b.r+=b.vr; ctx.save(); ctx.translate(b.x,b.y); ctx.rotate(b.r); ctx.fillStyle=b.c; ctx.fillRect(-b.w/2,-b.h/2,b.w,b.h); ctx.restore(); });
+    if(++t<420) requestAnimationFrame(loop); else ctx.clearRect(0,0,cv.width,cv.height); })();
+}
+
+/* ===================== MULAI ===================== */
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $("modalGuru").classList.contains("aktif")) tutupGuru(); });
+buatPapan(); renderAtur();
+</script>
+</body>
+</html>
