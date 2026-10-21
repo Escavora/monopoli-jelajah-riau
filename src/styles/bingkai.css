@@ -1,0 +1,10 @@
+/* ================= BINGKAI KAYU BERUKIR (dipakai ulang) ================= */
+.bingkai{position:relative;background:var(--kayu) var(--serat);background-image:var(--serat),linear-gradient(160deg,var(--kayu-terang),var(--kayu) 45%,var(--kayu-gelap));border-radius:12px;padding:30px;box-shadow:inset 0 2px 0 rgba(255,225,170,.3),inset 0 -4px 0 rgba(0,0,0,.35),0 16px 30px rgba(60,30,10,.32)}
+.bingkai>.pita{position:absolute;pointer-events:none}
+.pita.t,.pita.b{left:22px;right:22px;height:14px;background:var(--rebung-h) repeat-x center}
+.pita.t{top:8px}.pita.b{bottom:8px;transform:scaleY(-1)}
+.pita.l,.pita.r{top:22px;bottom:22px;width:14px;background:var(--rebung-v) repeat-y center}
+.pita.l{left:8px}.pita.r{right:8px;transform:scaleX(-1)}
+.bingkai>.paku{position:absolute;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#F5DFA6,var(--emas) 55%,#7A5A1E);box-shadow:0 1px 2px rgba(0,0,0,.5)}
+.paku.a{top:6px;left:6px}.paku.b{top:6px;right:6px}.paku.c{bottom:6px;left:6px}.paku.d{bottom:6px;right:6px}
+.isi-cat{background:var(--cat-terang);border-radius:6px;box-shadow:inset 0 3px 8px rgba(78,42,16,.35),inset 0 0 0 2px var(--emas);height:100%;overflow:auto;position:relative}

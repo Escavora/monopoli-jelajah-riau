@@ -1,0 +1,11 @@
+.atur-baris{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0;font-size:22px;font-weight:900}
+.pilih{background:var(--cat);color:var(--tinta);font-weight:700;padding:6px 18px;box-shadow:inset 0 0 0 2px #E1C998,inset 0 -4px 0 2px #E1C998}
+.pilih.on{background:var(--hijau) var(--serat);color:var(--krem-teks);box-shadow:inset 0 0 0 2px var(--emas),inset 0 -4px 0 2px var(--hijau-gelap)}
+#daftarPemain{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:4px 26px;margin-top:10px}
+.baris-pemain{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:2px dashed #E1C998}
+.baris-pemain input{flex:1;min-width:0;font:800 20px var(--font-isi);padding:8px 12px;border-radius:8px;border:none;background:var(--kertas);box-shadow:inset 0 2px 4px rgba(78,42,16,.25),inset 0 0 0 2px #E1C998;min-height:48px;color:var(--tinta);caret-color:var(--hijau)}
+.baris-pemain input:focus{outline:3px solid var(--hijau);outline-offset:1px}
+.pilih-pion{display:flex;gap:3px}
+.pilih-pion button{min-width:40px;width:40px;height:48px;padding:0;border-radius:8px;font-size:26px;background:transparent}
+.pilih-pion button.on{background:var(--cat);box-shadow:inset 0 0 0 3px var(--c)}
+.pilih-pion button:not(.on){opacity:.55}

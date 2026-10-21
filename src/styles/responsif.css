@@ -1,0 +1,114 @@
+/* layar tegak (tablet portrait / ponsel) */
+@media (max-aspect-ratio:1/1){
+  body{overflow:auto;align-items:flex-start}
+  #app{width:100vw;height:auto;min-height:100vh}
+  .layar{position:relative;min-height:100vh}
+  #layarPapan{flex-direction:column;padding:10px}
+  #papanWrap{width:100%;height:auto}
+  #panelSamping{flex:none}
+  #daftarPemain{grid-template-columns:1fr}
+  .langkah{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .baris-pemain{flex-wrap:wrap}.pilih-pion{width:100%;justify-content:space-between}
+  .papan-nama{padding:28px 22px}
+}
+@media print{
+  body *{visibility:hidden}
+  .sertifikat,.sertifikat *{visibility:visible}
+  .sertifikat{position:fixed;top:30%;left:50%;transform:translateX(-50%)}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.05s!important}}
+
+/* tablet mendatar & laptop kecil: papan memakai tinggi penuh, panel samping dirapatkan */
+@media (min-aspect-ratio:1/1) and (max-width:1180px){
+  #layarPapan{gap:10px}
+  #panelSamping{gap:8px}
+  .plak{padding:10px 12px}
+  .atas-panel{gap:6px}
+  #infoRonde{font-size:17px;padding:6px}
+  .ikon-btn{width:48px;height:48px}
+  .ikon-btn .ic{font-size:26px}
+  #kotakGiliran{gap:10px;font-size:15px}
+  #kotakGiliran .token{width:50px;height:50px;font-size:32px}
+  #daftarSkor{padding:6px 8px}
+  .skor{padding:5px 6px;gap:8px}
+  .skor .nm{font-size:17px}
+  .skor .stm{font-size:12px}
+  .skor .bt{font-size:22px}
+  .skor .token{width:36px;height:36px;font-size:22px}
+  .legenda{font-size:13px;padding:8px 10px;gap:4px 8px}
+  .legenda i{width:20px;height:20px;font-size:14px}
+  .sikap{font-size:14px;padding:6px}
+  .sikap .ic{font-size:22px}
+}
+
+/* ponsel (tegak maupun mendatar): petak terlalu kecil untuk teks, jadi hanya ikon (ketuk petak = nama) */
+@media (max-width:600px),(max-height:500px){
+  .petak .nama,.petak .ket{display:none}
+  .petak .ikon,.petak.pojok .ikon{margin-top:10%}
+  .petak.pojok .ikon,.petak.kartu .ikon{margin-top:0}
+  .stempelku .cap{width:9px;height:9px;box-shadow:0 0 0 1.5px #FFF9EC}
+  #tengah{grid-template-columns:minmax(0,1fr);padding:6% 5% 4%}
+  .peta-box,.sudut-ukir,.tumpukan .lbl{display:none}
+  .tumpukan{gap:0;min-width:0}
+  .tumpukan-baris{grid-column:1}
+  #layarPapan{padding:6px;gap:8px}
+  #tombolLempar{font-size:20px}
+}
+@supports (container-type:size){
+  @media (max-width:600px),(max-height:500px){
+    .petak .ikon,.petak.pojok .ikon{font-size:min(68cqmin,40px)}
+  }
+}
+
+/* ponsel mendatar: panel samping bisa digulir dan dipadatkan */
+@media (max-height:500px) and (min-aspect-ratio:1/1){
+  #panelSamping{overflow:auto;gap:6px}
+  .legenda,.sikap{display:none}
+  .plak{padding:6px 10px}
+  #kotakGiliran .token{width:40px;height:40px;font-size:24px}
+  #kotakGiliran .siapa{font-size:18px}
+  #infoRonde{font-size:15px}
+  .ikon-btn{width:42px;height:42px}
+  .ikon-btn .ic{font-size:22px}
+}
+
+/* layar pendek (ponsel mendatar): layar non-papan dipadatkan agar tidak terpotong */
+@media (max-height:500px){
+  #layarPembuka{gap:1vh;padding:1vh 20px}
+  .papan-nama{margin-top:8vh;padding:26px 5vw 26px}
+  .papan-nama::before{top:8px}.papan-nama::after{bottom:8px}
+  .selembayung{width:min(200px,26vw)}
+  .judul-utama{font-size:clamp(26px,10.5vh,60px)}
+  .subjudul{font-size:14px;margin-top:.4vh}
+  .panggung{font-size:clamp(28px,10vh,48px);padding-bottom:6px}
+  .slogan-teks{font-size:15px}
+  .btn-besar{font-size:18px;padding:8px 22px}
+  .info-kecil{display:none}
+  .baris-tombol{gap:12px}
+
+  #layarCara,#layarAtur{padding:8px 12px}
+  #layarCara .bingkai,#layarAtur .bingkai{padding:22px}
+  #layarCara .isi-cat,#layarAtur .isi-cat{padding:10px 18px 12px}
+  .judul-panel{font-size:24px;margin-bottom:6px}
+  .langkah li{font-size:15px;padding:4px 0}
+  .medali{width:40px;height:40px;font-size:26px}
+  .legenda-besar{margin:8px 0 2px}
+  .chip-kartu{font-size:14px;padding:4px 10px 4px 6px}
+  .chip-kartu .ic{font-size:20px}
+  .atur-baris{font-size:17px;margin:4px 0}
+  .baris-pemain{padding:5px 0}
+  .tengah{margin-top:8px}
+
+  #layarAkhir{gap:1vh;padding:1vh 16px;overflow-y:auto;justify-content:flex-start}
+  .judul-akhir{font-size:clamp(22px,8vh,34px)}
+  .podium .token{width:44px;height:44px;font-size:28px}
+  .podium .nm{font-size:16px}
+  .podium .nilai{font-size:14px}
+  .podium .balok{height:calc(var(--h)*.28px);font-size:26px;padding-top:2px}
+  .sertifikat{padding:30px 36px 28px;flex:none}
+  .sertifikat h2{font-size:20px;margin-top:2px}
+  .sertifikat .nama-juara{font-size:26px;margin:2px 0 4px}
+  .sertifikat p{font-size:13px}
+}

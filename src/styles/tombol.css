@@ -1,0 +1,14 @@
+/* ================= TOMBOL: papan kayu berpernis ================= */
+button{font-family:var(--font-judul);cursor:pointer;border:none;min-height:48px;min-width:48px;font-size:20px;border-radius:10px;transition:transform .12s ease-out,box-shadow .12s ease-out,filter .12s;display:inline-flex;align-items:center;justify-content:center;gap:10px;color:inherit;background:none}
+button:active:not(:disabled){transform:translateY(2px)}
+button:focus-visible{outline:4px solid #1D4ED8;outline-offset:3px}
+button:disabled{opacity:.45;cursor:not-allowed}
+button .ic{font-size:1.25em}
+.btn{padding:10px 26px;font-weight:700;letter-spacing:.01em}
+.btn-hijau{background:var(--hijau) var(--serat);color:var(--krem-teks);box-shadow:inset 0 0 0 2px var(--emas),inset 0 2px 0 4px rgba(255,255,255,.08),inset 0 -5px 0 2px var(--hijau-gelap),0 4px 8px rgba(40,20,5,.3)}
+.btn-hijau .ic *{stroke:var(--hijau-gelap)}
+.btn-kayu{background:var(--kayu-terang) var(--serat);color:var(--krem-teks);box-shadow:inset 0 0 0 2px var(--emas-muda),inset 0 -5px 0 2px var(--kayu-gelap),0 4px 8px rgba(40,20,5,.3)}
+.btn-cat{background:var(--cat-terang);color:var(--tinta);box-shadow:inset 0 0 0 2px var(--emas),inset 0 -4px 0 2px #E1C998,0 3px 6px rgba(40,20,5,.2)}
+.btn-merah{background:var(--merah-hati) var(--serat);color:var(--krem-teks);box-shadow:inset 0 0 0 2px var(--emas-muda),inset 0 -5px 0 2px #5A1712,0 4px 8px rgba(40,20,5,.3)}
+.btn:hover:not(:disabled){filter:brightness(1.08)}
+.btn-besar{font-size:27px;padding:14px 34px}

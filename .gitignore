@@ -1,2 +1,4 @@
 .omc/
 .impeccable/
+node_modules/
+dist/

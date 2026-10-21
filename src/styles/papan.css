@@ -1,0 +1,4 @@
+/* ================= LAYAR PAPAN ================= */
+#layarPapan{gap:1.2%;padding:1%;align-items:stretch}
+#papanWrap{height:min(100%,calc(100vw - 310px));aspect-ratio:1;flex:none;padding:3.3%;border-radius:12px}
+#papan{position:relative;width:100%;height:100%;display:grid;grid-template-columns:1.38fr repeat(7,1fr) 1.38fr;grid-template-rows:1.38fr repeat(7,1fr) 1.38fr;gap:3px;background:var(--alur);border-radius:5px;padding:3px;box-shadow:0 0 0 2px var(--emas),0 0 0 5px var(--kayu-gelap)}

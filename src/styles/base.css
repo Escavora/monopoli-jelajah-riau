@@ -1,0 +1,18 @@
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+::selection{background:var(--emas-muda);color:var(--tinta)}
+body{
+  font-family:var(--font-isi);color:var(--tinta);background-color:var(--krem);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cg fill='none' stroke='%23A9853A' stroke-opacity='.16' stroke-width='1.6'%3E%3Cpath d='M32 4 60 32 32 60 4 32Z'/%3E%3Cpath d='M32 18 46 32 32 46 18 32Z'/%3E%3Cpath d='M0 0 10 10M64 0 54 10M0 64 10 54M64 64 54 54'/%3E%3C/g%3E%3Cpath d='M32 28 36 32 32 36 28 32Z' fill='%231F5A3A' fill-opacity='.12'/%3E%3C/svg%3E");
+  overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+*{scrollbar-width:thin;scrollbar-color:var(--emas-redup) transparent}
+*::-webkit-scrollbar{width:10px}*::-webkit-scrollbar-thumb{background:var(--emas-redup);border-radius:10px;border:2px solid transparent;background-clip:padding-box}
+h1,h2,h3{font-family:var(--font-judul);text-wrap:balance}
+
+
+/* layar sentuh: tanpa zoom ketuk-ganda, tanpa kilatan ketuk, teks antarmuka tidak terpilih tak sengaja */
+html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{-webkit-user-select:none;user-select:none}
+input{-webkit-user-select:text;user-select:text}
+button,select,input{touch-action:manipulation}

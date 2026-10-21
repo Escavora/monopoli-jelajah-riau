@@ -1,0 +1,5 @@
+/* ikon SVG buatan sendiri */
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-.15em;flex:none;overflow:visible}
+.ic *{stroke:#2B1A0C;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.ic path:not([fill]),.ic circle:not([fill]){fill:none}
+.ic .n{stroke:none}.ic .w{stroke:#FFF9EC}

@@ -1,0 +1,8 @@
+.langkah{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 40px;counter-reset:l}
+.langkah li{display:flex;gap:14px;align-items:center;font-size:21px;font-weight:800;padding:10px 0;border-bottom:2px dashed #E1C998;counter-increment:l}
+.langkah li:last-child{grid-column:1/-1;justify-content:center;border-bottom:none;color:var(--hijau)}
+.medali{width:62px;height:62px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:38px;background:var(--cat);box-shadow:inset 0 0 0 3px var(--emas),inset 0 -4px 0 3px #E1C998;position:relative}
+.medali::after{content:counter(l);position:absolute;top:-4px;left:-6px;width:26px;height:26px;border-radius:50%;background:var(--hijau);color:var(--krem-teks);font:700 15px/26px var(--font-judul);text-align:center}
+.legenda-besar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:18px 0 6px}
+.chip-kartu{display:inline-flex;align-items:center;gap:8px;color:#111;font-weight:900;font-size:19px;padding:8px 16px 8px 10px;border-radius:8px;background-image:var(--tenun-putih);box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
+.chip-kartu .ic{font-size:28px}

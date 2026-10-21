@@ -1,0 +1,24 @@
+/* Urutan impor = urutan cascade. responsif.css harus terakhir. */
+@import "./tokens.css";
+@import "./base.css";
+@import "./icon.css";
+@import "./tombol.css";
+@import "./layar.css";
+@import "./bingkai.css";
+@import "./pembuka.css";
+@import "./panel.css";
+@import "./cara.css";
+@import "./atur.css";
+@import "./token.css";
+@import "./papan.css";
+@import "./petak.css";
+@import "./tengah.css";
+@import "./dadu.css";
+@import "./tumpukan.css";
+@import "./pion.css";
+@import "./panel-samping.css";
+@import "./kartu-modal.css";
+@import "./modal-guru.css";
+@import "./akhir.css";
+@import "./toast.css";
+@import "./responsif.css";

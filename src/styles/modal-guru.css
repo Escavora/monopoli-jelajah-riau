@@ -1,0 +1,5 @@
+#modalGuru .bingkai{width:min(660px,94vw);padding:26px}
+#modalGuru .isi-cat{padding:20px 26px}
+.guru-grid{display:flex;flex-direction:column;gap:12px}
+.guru-baris{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:20px;font-weight:800}
+.guru-baris select{font:800 20px var(--font-isi);min-height:48px;border-radius:8px;border:none;box-shadow:inset 0 0 0 2px #E1C998;background:var(--kertas);padding:0 10px;flex:1;color:var(--tinta)}

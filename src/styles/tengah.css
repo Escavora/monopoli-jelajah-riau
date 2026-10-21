@@ -1,0 +1,8 @@
+#tengah{grid-area:2/2/9/9;background:var(--cat-terang);border-radius:3px;position:relative;display:grid;grid-template-columns:1.3fr 1fr;grid-template-rows:1fr auto;gap:4px 10px;padding:4.5% 5% 4%;overflow:hidden;box-shadow:inset 0 0 0 6px var(--cat-terang),inset 0 0 0 8px var(--emas),inset 0 0 0 11px var(--cat-terang),inset 0 0 0 12px var(--emas-redup)}
+#tengah::before{content:"";position:absolute;inset:0;background:var(--tenun-emas);opacity:.35;pointer-events:none}
+.sudut-ukir{position:absolute;width:8%;aspect-ratio:1;pointer-events:none}
+.sudut-ukir.a{top:12px;left:12px}.sudut-ukir.b{top:12px;right:12px;transform:scaleX(-1)}.sudut-ukir.c{bottom:12px;left:12px;transform:scaleY(-1)}.sudut-ukir.d{bottom:12px;right:12px;transform:scale(-1)}
+.peta-box{position:relative;display:flex;align-items:center;justify-content:center;min-height:0}
+.peta-box>svg{width:100%;height:100%;overflow:visible}
+.ikon-peta{position:absolute;font-size:clamp(26px,4.4vh,48px);text-align:center;line-height:1;filter:drop-shadow(0 3px 2px rgba(60,30,10,.25))}
+.ikon-peta small{display:block;font:800 12px var(--font-isi);color:var(--tinta);background:var(--kertas);border-radius:4px;padding:1px 5px;margin-top:2px;white-space:nowrap;box-shadow:0 0 0 1px var(--emas)}

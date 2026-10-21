@@ -1,0 +1,23 @@
+/* ================= PANEL SAMPING: papan nama berpernis ================= */
+#panelSamping{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;color:var(--krem-teks)}
+.atas-panel{display:flex;gap:8px;align-items:stretch}
+.plak{background:var(--hijau);background-image:var(--serat);border-radius:8px;box-shadow:inset 0 0 0 2px var(--emas),inset 0 0 0 5px var(--hijau-gelap),inset 0 0 0 6px var(--emas-redup),0 6px 14px rgba(40,20,5,.28);padding:14px 16px}
+#infoRonde{flex:1;font-family:var(--font-judul);font-weight:700;font-size:21px;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px}
+.ikon-btn{width:56px;height:56px;flex:none;font-size:28px;border-radius:50%;background:radial-gradient(circle at 40% 30%,var(--kayu-terang),var(--kayu-gelap));box-shadow:inset 0 0 0 2px var(--emas),inset 0 -4px 0 2px rgba(0,0,0,.3),0 4px 8px rgba(40,20,5,.3)}
+.ikon-btn .ic{font-size:30px}
+#kotakGiliran{display:flex;align-items:center;gap:14px;font-weight:800;font-size:18px;color:var(--emas-muda)}
+#kotakGiliran .token{width:64px;height:64px;font-size:40px}
+#kotakGiliran .siapa{font-family:var(--font-judul);font-size:clamp(22px,2.6vh,30px);color:var(--krem-teks);line-height:1.05;display:block}
+#daftarSkor{flex:1;overflow:auto;display:flex;flex-direction:column;padding:8px 10px}
+.skor{display:flex;align-items:center;gap:10px;padding:7px 8px;border-bottom:1px solid rgba(194,154,69,.4);font-weight:800;font-size:18px;border-radius:6px}
+.skor:last-child{border-bottom:none}
+.skor.aktif{background:var(--emas-muda);color:var(--tinta)}
+.skor .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--font-judul);font-weight:600;font-size:20px}
+.skor .stm{font:800 14px var(--font-isi);opacity:.85;display:flex;align-items:center;gap:4px}
+.skor .bt{font-family:var(--font-judul);font-size:26px;white-space:nowrap;display:flex;align-items:center;gap:4px;font-variant-numeric:tabular-nums}
+.skor .token{width:42px;height:42px;font-size:26px}
+.legenda{display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;font-size:15px;font-weight:800;background:var(--cat-terang);color:var(--tinta);border-radius:8px;padding:10px 12px;box-shadow:inset 0 0 0 2px var(--emas),0 4px 10px rgba(40,20,5,.18)}
+.legenda div{display:flex;align-items:center;gap:7px}
+.legenda i{width:24px;height:24px;border-radius:4px;flex:none;display:grid;place-items:center;font-size:17px;background-image:var(--tenun-putih)}
+.sikap{font-weight:900;font-size:17px;text-align:center;color:var(--emas-muda);padding:10px;display:flex;align-items:center;justify-content:center;gap:10px}
+.sikap .ic{font-size:28px}

@@ -1,0 +1,36 @@
+/* ================= KARTU (modal) ================= */
+.modal{position:fixed;inset:0;background:rgba(43,26,12,.6);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal.aktif{display:flex}
+.kartu-wrap{perspective:1500px;width:min(780px,94vw)}
+.kartu{position:relative;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.16,1,.3,1)}
+.kartu.terbuka{transform:rotateY(180deg)}
+.sisi{backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;box-shadow:0 22px 44px rgba(20,10,0,.45)}
+.sisi.belakang{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#111;font-family:var(--font-judul);font-size:38px;font-weight:700;background-color:var(--c);background-image:var(--tenun-putih);box-shadow:inset 0 0 0 10px #FFF9EC,inset 0 0 0 13px var(--emas),0 22px 44px rgba(20,10,0,.45);min-height:320px}
+.sisi.belakang .medali-besar{width:170px;height:170px;border-radius:50%;display:grid;place-items:center;font-size:110px;background:#FFF9EC;box-shadow:inset 0 0 0 5px var(--emas),inset 0 0 0 10px #FFF9EC,inset 0 0 0 12px var(--c)}
+.sisi.belakang span{background:#FFF9EC;padding:4px 18px;border-radius:6px}
+.sisi.depan{transform:rotateY(180deg);background:#FFF9EC;padding:0 0 26px;max-height:92vh;overflow:auto;box-shadow:inset 0 0 0 8px var(--c),inset 0 0 0 11px var(--emas),0 22px 44px rgba(20,10,0,.45)}
+.kepala-kartu{display:flex;align-items:center;gap:14px;font-family:var(--font-judul);font-size:28px;font-weight:700;padding:16px 26px 14px;color:#111;background-color:var(--c);background-image:var(--tenun-putih);border-radius:18px 18px 0 0;margin-bottom:20px;position:relative}
+.kepala-kartu::after{content:"";position:absolute;left:0;right:0;bottom:-12px;height:12px;background:var(--rebung-h) repeat-x;transform:scaleY(-1);opacity:.9}
+.kepala-kartu .ic{font-size:46px;background:#FFF9EC;border-radius:50%;padding:5px;width:58px;height:58px;box-shadow:inset 0 0 0 2px var(--emas)}
+.badan-kartu{padding:0 32px}
+.teks-kartu{font-size:clamp(25px,2.6vw,32px);font-weight:900;line-height:1.28;margin-bottom:16px;text-wrap:pretty}
+.info-petak{font-size:24px;line-height:1.4;padding:4px 0 14px;margin-bottom:14px;font-weight:700;display:flex;gap:12px;border-bottom:2px dashed #E1C998;color:var(--tinta)}
+.info-petak .ic{font-size:34px;margin-top:2px}
+.opsi{display:flex;flex-direction:column;gap:12px}
+.opsi button{background:var(--cat-terang);color:var(--tinta);font-family:var(--font-isi);font-weight:800;font-size:24px;text-align:left;justify-content:flex-start;padding:10px 16px;box-shadow:inset 0 0 0 2px #E1C998,inset 0 -5px 0 2px #E1C998,0 2px 4px rgba(40,20,5,.12)}
+.opsi button b{background:var(--hijau);color:var(--krem-teks);border-radius:50%;width:42px;height:42px;display:grid;place-items:center;flex:none;font-family:var(--font-judul);box-shadow:inset 0 0 0 2px var(--emas)}
+.opsi button:hover:not(:disabled){box-shadow:inset 0 0 0 3px var(--emas),inset 0 -5px 0 3px #E1C998}
+.opsi button:disabled{opacity:1}
+.opsi button.benar{background:#D7F2DE;box-shadow:inset 0 0 0 3px #15803D}
+.opsi button.salah{background:#FBDADA;box-shadow:inset 0 0 0 3px #B91C1C}
+.opsi button.kunci{outline:4px dashed #15803D;outline-offset:3px}
+.contoh{background:#E8F5EC;border-radius:10px;padding:12px 16px;font-size:24px;font-weight:800;margin:12px 0;display:none;box-shadow:inset 0 0 0 2px #15803D;gap:12px;align-items:flex-start}
+.contoh .ic{font-size:34px}
+.contoh.tampil{display:flex}
+.petunjuk{font-size:20px;font-weight:800;color:var(--tinta2);display:flex;gap:10px;align-items:center;margin-bottom:6px}
+.petunjuk .ic{font-size:30px}
+.umpan{font-family:var(--font-judul);font-size:28px;font-weight:700;text-align:center;margin:16px 0 4px}
+.umpan.ok{color:#15803D}.umpan.no{color:#B91C1C}
+.aksi{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.aksi button{font-size:24px}
+.hadiah{text-align:center;font-weight:900;font-size:20px;margin-top:10px;color:var(--tinta2);display:flex;gap:8px;justify-content:center;align-items:center}

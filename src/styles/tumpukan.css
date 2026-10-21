@@ -1,0 +1,8 @@
+.tumpukan-baris{grid-column:1/3;display:flex;gap:2.2%;justify-content:center;align-items:flex-end;position:relative}
+.tumpukan{flex:1;max-width:116px;display:flex;flex-direction:column;align-items:center;gap:5px;padding:0;background:none;min-height:48px}
+.tumpukan .dek{position:relative;width:100%;aspect-ratio:1.45;border-radius:7px;display:grid;place-items:center;font-size:clamp(24px,3.8vh,42px);background-color:var(--c);background-image:var(--tenun-putih);box-shadow:inset 0 0 0 3px rgba(255,255,255,.75),inset 0 0 0 5px var(--c),2px 3px 0 -1px #FFF9EC,3px 4px 0 -1px rgba(0,0,0,.2),5px 6px 0 -2px #FFF9EC,6px 7px 0 -2px rgba(0,0,0,.2),0 8px 12px rgba(40,20,5,.25);transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.tumpukan .dek .ic{filter:drop-shadow(0 2px 0 rgba(0,0,0,.2))}
+.tumpukan .lbl{font:900 max(13px,1.4vh) var(--font-isi);color:var(--tinta);line-height:1}
+.tumpukan:hover .dek{transform:translateY(-3px)}
+.tumpukan.nyala .dek{animation:angkat 1.1s ease-in-out infinite;outline:4px solid var(--hijau);outline-offset:3px}
+@keyframes angkat{50%{transform:translateY(-9px) rotate(-2deg)}}

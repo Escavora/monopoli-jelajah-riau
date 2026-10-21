@@ -1,0 +1,7 @@
+/* ================= CARA BERMAIN & PENGATURAN ================= */
+#layarCara,#layarAtur{align-items:center;justify-content:center;padding:2.5vh 24px;overflow-y:auto}
+/* margin:auto = di tengah bila muat, mulai dari atas dan bisa digulir bila terlalu tinggi */
+#layarCara .bingkai,#layarAtur .bingkai{width:min(1120px,96%);display:flex;flex:none;margin:auto}
+#layarCara .isi-cat,#layarAtur .isi-cat{padding:22px 34px 26px;width:100%;height:auto;overflow:visible}
+.judul-panel{font-size:clamp(30px,3.4vw,44px);color:var(--hijau);text-align:center;margin:0 0 16px;display:flex;align-items:center;justify-content:center;gap:12px}
+.tengah{text-align:center;margin-top:16px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}

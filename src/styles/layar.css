@@ -1,0 +1,3 @@
+#app{position:relative;width:100vw;height:100vh;height:100dvh;max-width:177.78vh;max-width:177.78dvh}
+.layar{position:absolute;inset:0;display:none}
+.layar.aktif{display:flex}

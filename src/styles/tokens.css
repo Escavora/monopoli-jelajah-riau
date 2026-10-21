@@ -1,0 +1,25 @@
+/* ================= TOKEN ================= */
+:root{
+  /* tanah & kertas */
+  --krem:#F4E7CB; --cat:#F6E6C2; --cat-terang:#FCF3DE; --kertas:#FFF9EC;
+  /* kayu jati */
+  --kayu:#7A4520; --kayu-terang:#9A5B2C; --kayu-gelap:#4E2A10; --alur:#3E200B;
+  /* pernis hijau & emas ukir (emas dibuat redup agar beda dari kuning kartu) */
+  --hijau:#1F5A3A; --hijau-gelap:#143D27; --hijau-terang:#2E7A52;
+  --emas:#C29A45; --emas-redup:#A9853A; --emas-muda:#E6C77E;
+  --merah-hati:#8E2A22;
+  --tinta:#2B1A0C; --tinta2:#5B4128; --krem-teks:#FFF4DC;
+  /* kartu */
+  --tantangan:#3B82F6; --kesempatan:#FACC15; --dana:#22C55E; --bonus:#A855F7; --hukuman:#EF4444;
+  /* zona */
+  --z-lingkungan:#F97316; --z-wilayah:#C8A27A; --z-riau:#A9853A;
+  --font-judul:"Fredoka","Baloo 2","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;
+  --font-isi:"Nunito","Segoe UI","Trebuchet MS",system-ui,sans-serif;
+  /* pola */
+  --serat:repeating-linear-gradient(92deg,rgba(255,220,170,.06) 0 2px,transparent 2px 7px,rgba(0,0,0,.07) 7px 8px,transparent 8px 15px);
+  --tenun-putih:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M8 1 15 8 8 15 1 8Z' fill='none' stroke='%23fff' stroke-opacity='.28' stroke-width='1.4'/%3E%3Ccircle cx='8' cy='8' r='1.4' fill='%23fff' fill-opacity='.3'/%3E%3C/svg%3E");
+  --tenun-emas:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Cpath d='M11 2 20 11 11 20 2 11Z' fill='none' stroke='%23C29A45' stroke-opacity='.55' stroke-width='1.5'/%3E%3Cpath d='M11 7 15 11 11 15 7 11Z' fill='%23C29A45' fill-opacity='.45'/%3E%3C/svg%3E");
+  --rebung-h:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='14'%3E%3Cpath d='M0 14 10 1 20 14Z' fill='%23C29A45'/%3E%3Cpath d='M5 14 10 7 15 14Z' fill='%234E2A10'/%3E%3C/svg%3E");
+  --rebung-v:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='20'%3E%3Cpath d='M14 0 1 10 14 20Z' fill='%23C29A45'/%3E%3Cpath d='M14 5 7 10 14 15Z' fill='%234E2A10'/%3E%3C/svg%3E");
+  --rebung-hijau:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='14'%3E%3Cpath d='M0 14 10 1 20 14Z' fill='%23C29A45'/%3E%3Cpath d='M5 14 10 7 15 14Z' fill='%23143D27'/%3E%3C/svg%3E");
+}
